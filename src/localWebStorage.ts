@@ -3,136 +3,73 @@
  * @Company: mConnect.biz | @License: MIT
  * @Description: local web storage functions
  */
+import { ObjectType, ValueType } from "./types.ts";
 
-import localforage from "localforage";
-
-export const setCookie = (cname: string, cvalue: string, exdays: number) => {
-    const d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    // const dt = Date.now()
-    // const exMilliseconds = dt + (exdays * 24 * 60 * 60 * 1000);
-    const expires = "expires=" + d.toUTCString();
-    // @ts-ignore
-    document.cookie = `${cname}=${cvalue}; ${expires}; path=/`;
-};
-
-export const getCookie = (cname: string): string => {
-    const name = `${cname}=`;
-    // @ts-ignore
-    const decodedCookie = decodeURIComponent(document.cookie);
-    const ca = decodedCookie.split(";");
-    for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        // trip white/empty spaces
-        while (c.charAt(0) === " ") {
-            c = c.substring(1);
-        }
-        // if cookie exist, return the value
-        if (c.indexOf(name) === 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-};
-
-export const checkCookie = () => {
-    let username = getCookie("username");
-    if (username !== "") {
-        //TODO: perform action with set value;
-    } else {
-        // @ts-ignore
-        username = prompt("Please enter your name:", "");
-        if (username !== "" && username !== null) {
-            setCookie("username", username, 365);
-        }
-    }
-};
-
-export const mcStore = async (options = {storageName: ""}) => {
-    // localforage instance for client/UI only
-    const storageName = options && options.storageName? options.storageName : "mconnectStore";
-    // @ts-ignore
-    return await localforage.createInstance({name: storageName,});
-};
-
-export const mcStoreTest = async (options = {storageName: ""}) => {
-    // NOTE: *****this method is strictly for testing only*****
-    // localforage instance for client/UI only
-    return (options && options.storageName && typeof options.storageName ?
-        options.storageName : "mconnectStore");
-};
-
-export const setItemState = async (itemKey: string, itemValue: any, expire: number) => {
+export const setItemState = (itemKey: string, itemValue: ValueType, expire: number) => {
     try {
-        const mStore = await mcStore();
-        await mStore.setItem(itemKey, itemValue);
-        await mStore.setItem(`${itemKey}Expire`, expire);
+        localStorage.setItem(itemKey, JSON.stringify(itemValue));
+        localStorage.setItem(`${itemKey}Expire`, expire.toString());
     } catch (e) {
         console.error("error setting/saving localforage item: ", e.stack);
     }
 };
 
-export const removeItemState = async (itemKey: string) => {
+export const removeItemState = (itemKey: string) => {
     try {
-        const mStore = await mcStore();
-        await mStore.removeItem(itemKey);
-        await mStore.removeItem(`${itemKey}Expire`);
+        localStorage.removeItem(itemKey);
+        localStorage.removeItem(`${itemKey}Expire`);
     } catch (e) {
         console.error("error removing localforage item: ", e.stack);
     }
 }
 
-export const getItemState = async (itemKey: string) => {
+export const getItemState = (itemKey: string): ValueType => {
     try {
-        const mStore = await mcStore();
-        const item = await mStore.getItem(itemKey),
-            expire = await mStore.getItem(`${itemKey}Expire`);
+        const item = localStorage.getItem(itemKey),
+            expire = localStorage.getItem(`${itemKey}Expire`);
         if (!item || !expire) {
             return "";
         }
         if (Date.now() > Number(expire)) {
-            await removeItemState(itemKey);
+            removeItemState(itemKey);
             return "";
         }
-        return item;
+        return JSON.parse(item);
     } catch (e) {
         console.error("error getting localforage data: ", e.stack);
         return ""
     }
 };
 
-export const setToken = async (token: string, expire: number) => {
+export const setToken = (token: string, expire: number) => {
     try {
-        const mStore = await mcStore();
-        await mStore.setItem("authToken", token);
-        await mStore.setItem("authTokenExpire", expire);
+        localStorage.setItem("authToken", token);
+        localStorage.setItem("authTokenExpire", expire.toString());
     } catch (e) {
         console.error("error setting/saving localStorage item (setToken):", e.message);
     }
 };
 
-export const removeToken = async () => {
+export const removeToken = () => {
     try {
-        const mStore = await mcStore();
-        await mStore.removeItem("authToken");
-        await mStore.removeItem("authTokenExpire");
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("authTokenExpire");
     } catch (e) {
         console.error("error removing localStorage item(removeToken): ", e.message);
     }
 };
 
-export const getToken = async() => {
+export const getToken = (): string => {
     try {
-        const mStore = await mcStore();
-        const item = await mStore.getItem("authToken"),
-            expire = await mStore.getItem("authTokenExpire");
+        const item = localStorage.getItem("authToken"),
+            expire = localStorage.getItem("authTokenExpire");
         if (!item || !expire) {
             return "";
         }
         if (Date.now() > Number(expire)) {
             // await removeItemState(itemKey);
-            await removeToken();
-            await removeCurrentUser();
+            removeToken();
+            removeCurrentUser();
             return "";
         }
         return item;
@@ -142,44 +79,41 @@ export const getToken = async() => {
     }
 };
 
-export const loggedIn = async () => {
+export const loggedIn = () => {
     try {
-        return !!(await getToken());
+        return !!(getToken());
     } catch (e) {
         console.error("error getting localStorage item (loggedIn): ", e.message);
     }
 };
 
-export const setLoginName = async(name: string, expire: number) => {
+export const setLoginName = (name: string, expire: number) => {
     try {
-        const mStore = await mcStore();
-        await mStore.setItem("loginName", name);
-        await mStore.setItem("loginNameExpire", expire);
+        localStorage.setItem("loginName", name);
+        localStorage.setItem("loginNameExpire", expire.toString());
     } catch (e) {
         console.error("error setting/saving localStorage item (setLoginName):", e.message);
     }
 };
 
-export const removeLoginName = async () => {
+export const removeLoginName = () => {
     try {
-        const mStore = await mcStore();
-        await mStore.removeItem("loginName");
-        await mStore.removeItem("loginNameExpire");
+        localStorage.removeItem("loginName");
+        localStorage.removeItem("loginNameExpire");
     } catch (e) {
         console.error("error removing localStorage item(removeLoginName): ", e.message);
     }
 };
 
-export const getLoginName = async () => {
+export const getLoginName = (): string => {
     try {
-        const mStore = await mcStore();
-        const item = await mStore.getItem("loginName"),
-            expire = await mStore.getItem("loginNameExpire");
+        const item = localStorage.getItem("loginName"),
+            expire = localStorage.getItem("loginNameExpire");
         if (!item || !expire) {
             return "";
         }
         if (Date.now() > Number(expire)) {
-            await removeLoginName();
+            removeLoginName();
             return "";
         }
         return item;
@@ -189,57 +123,51 @@ export const getLoginName = async () => {
     }
 };
 
-export const setCurrentUser = async (userInfo: object) => {
+export const setCurrentUser = (userInfo: ObjectType) => {
     try {
-        const mStore = await mcStore();
-        await mStore.setItem("currentUser", userInfo);
+        localStorage.setItem("currentUser", JSON.stringify(userInfo));
     } catch (e) {
         console.error("error setting localStorage item(setCurrentUser): ", e.message);
     }
 };
 
-export const removeCurrentUser = async () => {
+export const removeCurrentUser = () => {
     try {
-        const mStore = await mcStore();
-        await mStore.removeItem("currentUser");
+        localStorage.removeItem("currentUser");
     } catch (e) {
         console.error("error removing localStorage item(removeCurrentUser): ", e.message);
     }
 };
 
-export const getCurrentUser = async () => {
+export const getCurrentUser = (): ObjectType => {
     try {
-        const mStore = await mcStore();
-        const item = await mStore.getItem("currentUser");
-        return item? item : "";
+        const item = localStorage.getItem("currentUser");
+        return item? JSON.parse(item) as ObjectType : {};
     } catch (e) {
         console.error("error retrieving localStorage item(getCurrentUser): ", e.message);
-        return "";
+        return {};
     }
 };
 
-export const setApiToken = async (token: string) => {
+export const setApiToken = (token: string) => {
     try {
-        const mStore = await mcStore();
-        await mStore.setItem("apiToken", token);
+        localStorage.setItem("apiToken", token);
     } catch (e) {
         console.error("error setting localStorage item(setApiToken): ", e.message);
     }
 };
 
-export const removeApiToken = async () => {
+export const removeApiToken = () => {
     try {
-        const mStore = await mcStore();
-        await mStore.removeItem("apiToken");
+        localStorage.removeItem("apiToken");
     } catch (e) {
         console.error("error removing localStorage item(removeApiToken): ", e.message);
     }
 };
 
-export const getApiToken = async () => {
+export const getApiToken = (): string => {
     try {
-        const mStore = await mcStore();
-        const item = await mStore.getItem("apiToken");
+        const item = localStorage.getItem("apiToken");
         return item? item : "";
     } catch (e) {
         console.error("error retrieving localStorage item(getApiToken): ", e.message);

@@ -1,103 +1,18 @@
-import localforage from 'localforage';
-import { getResMessage, ResponseMessage } from '@mconnect/mcresponse';
-
-// types
+import { ObjectType, ValueType } from "./types.ts";
+import {
+    camelToUnderscore,
+    currentUrlInfo, getLanguage, isEmptyObject, shortString, strToBool, userBrowser, userIpInfo
+} from "./utilFuncs.ts";
 
 export default {
-    camelToUnderscore(key: string): string {
-        return key.replace(/([A-Z])/g, "_$1").toLowerCase();
-    },
-    getLanguage(userLang = 'en-US'): string {
-        // Define/set default language variable
-        let defaultLang = 'en-US';
-        // Set defaultLang to current userLang, set from the UI
-        if (userLang) {
-            defaultLang = userLang;
-        }
-        return defaultLang;
-    },
-    getLocale(localeFiles: Locale, options: Options = {}) {
-        // validate localeFiles as an object
-        if (typeof localeFiles !== 'object' || Object.keys(localeFiles).length < 1 ||
-            Object.values(localeFiles).length < 1) {
-            return {
-                code   : 'paramsError',
-                message: 'Locale files should be an object and not empty',
-            };
-        }
-
-        // const localeType = options && options.type ? options.type : '';
-        const language = options && options.language ? options.language : 'en-US';
-
-        // set the locale file contents
-        return localeFiles[language];
-
-    },
-    getParamsMessage(msgObject: MessageObject): ResponseMessage {
-        let messages = '';
-        Object.entries(msgObject).forEach(([key, msg]) => {
-            messages = messages ? `${messages} | ${key} : ${msg}` : `${key} : ${msg}`;
-        });
-        return getResMessage('validateError', {
-            message: messages,
-        });
-    },
-    shortString(str: string, maxLength: number): string {
-        return str.toString().length > maxLength ? str.toString().substr(0, maxLength) + '...' : str.toString();
-    },
-    strToBool(val: string | number = 'n'): boolean {
-        const strVal = val.toString().toLowerCase();
-        if (strVal === 'true' || strVal === 't' || strVal === 'yes' || strVal === 'y') {
-            return true;
-        } else {
-            return Number(strVal) > 0;
-        }
-    },
-    async userIpInfo(ipUrl = 'https://ipinfo.io', options: object = {}): Promise<object> {
-        // Get the current user IP address Information
-        // TODO: use other method besides ipinfo.io, due to query limit (i.e. 429 error)
-        try {
-            // const reqH = options && options.headers? options. headers : {};
-            const reqHeaders = {'Content-Type': 'application/json'};
-            options = Object.assign({}, options, {
-                method : 'GET',
-                mode   : 'cors',
-                headers: reqHeaders,
-            });
-            const response = await fetch(ipUrl, options);
-            let result = await response.json();
-            result = result ? JSON.parse(result) : null;
-            if (response.ok) {
-                return result;
-            }
-            throw new Error("Error fetching ip-address information: ");
-        } catch (error) {
-            console.log("Error fetching ip-address information: ", error);
-            throw new Error(error.message);
-        }
-    },
-    userBrowser() {
-        // push each browser property, as key/value pair, into userBrowser array variable
-        return navigator.userAgent;
-    },
-    currentUrlInfo(pathLoc: string) {
-        // this function returns the parts (array) and lastIndex of a URL/pathLocation
-        let parts: string[] = [];
-        let lastIndex = -1;
-        if (pathLoc) {
-            parts = pathLoc.toString().split('://')[1].split('/');
-            // get the last index
-            lastIndex = parts.lastIndexOf('new') || parts.lastIndexOf('detail') || parts.lastIndexOf('list');
-            return {
-                parts,
-                lastIndex,
-            };
-        }
-        return {
-            parts,
-            lastIndex,
-        };
-    },
+    isEmptyObject,
+    shortString,
+    strToBool,
+    userIpInfo,
+    userBrowser,
+    currentUrlInfo,
+    camelToUnderscore,
+    getLanguage,
     getPath(req: Request): string {
         let itemPath = req.url || '/mc';
         itemPath = itemPath.split('/')[1];
@@ -147,7 +62,7 @@ export default {
         return result;
     },
     // Validation functions
-    isProvided(param: string | number | object): boolean {
+    isProvided(param: string | number | ObjectType): boolean {
         // Verify the Required status
         // Validate that the item is not empty / null / undefined
         return !(param === '' || param === null || param === undefined || Object.keys(param).length === 0);
@@ -168,7 +83,7 @@ export default {
         const numberPattern = /^([0-9])+([.])?([0-9])*$/;
         return numberPattern.test(num.toString());
     },
-    isObjectType(param: object): boolean {
+    isObjectType(param: ObjectType): boolean {
         "use strict";
         // Validate param is an object, {}
         return (typeof param === 'object' && !Array.isArray(param));
@@ -193,7 +108,7 @@ export default {
         const usernamePattern = /^([a-zA-Z0-9_])+$/; // alphanumeric, underscore, no space
         return usernamePattern.test(param);
     },
-    isEmpty(param: string | number | object | string[] | number[] | object[]): boolean {
+    isEmpty(param: ValueType): boolean {
         "use strict";
         return (param === '' || param === null || param === undefined ||
             Object.keys(param).length === 0 ||
@@ -308,221 +223,4 @@ export default {
             Number.MIN_SAFE_INTEGER <= n &&
             n <= Number.MAX_SAFE_INTEGER);
     },
-    // Web store functions:
-    setCookie(cname: string, cvalue: string, exdays: number) {
-        const d = new Date();
-        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-        const expires = "expires=" + d.toUTCString();
-        document.cookie = `${cname}=${cvalue}; ${expires}; path=/`;
-    },
-    getCookie(cname: string): string {
-        const name = `${cname}=`;
-        const decodedCookie = decodeURIComponent(document.cookie);
-        const ca = decodedCookie.split(';');
-        for (let i = 0; i < ca.length; i++) {
-            let c = ca[i];
-            // trip white/empty spaces
-            while (c.charAt(0) === ' ') {
-                c = c.substring(1);
-            }
-            // if cookie exist, return the value
-            if (c.indexOf(name) === 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return '';
-    },
-    checkCookie() {
-        let username: string | null = this.getCookie('username') || '';
-        if (username !== '') {
-            //TODO: perform action with set value;
-        } else {
-            username = prompt("Please enter your name:", '');
-            if (username !== '' && username !== null) {
-                this.setCookie('username', username, 365);
-            }
-        }
-    },
-    mcStore(options = {storageName: ''}) {
-        // localforage instance for client/UI only
-        const storageName = options && options.storageName ? options.storageName : 'mconnectStore';
-        return localforage.createInstance({name: storageName,});
-    },
-    mcStoreTest(options = {storageName: ''}) {
-        // NOTE: *****this method is strictly for testing only*****
-        // localforage instance for client/UI only
-        return (options && options.storageName && typeof options.storageName ?
-            options.storageName : 'mconnectStore');
-    },
-    async setItemState(itemKey: string, itemValue: ItemStateType, expire: number) {
-        try {
-            const mStore = this.mcStore();
-            await mStore.setItem(itemKey, itemValue);
-            await mStore.setItem(`${itemKey}Expire`, expire);
-        } catch (e) {
-            console.error('error setting/saving localforage item: ', e.stack);
-        }
-    },
-    async removeItemState(itemKey: string) {
-        try {
-            const mStore = this.mcStore();
-            await mStore.removeItem(itemKey);
-            await mStore.removeItem(`${itemKey}Expire`);
-        } catch (e) {
-            console.error('error removing localforage item: ', e.stack);
-        }
-    },
-    async getItemState(itemKey: string): Promise<any> {
-        try {
-            const mStore = this.mcStore();
-            const item = await mStore.getItem(itemKey),
-                expire = await mStore.getItem(`${itemKey}Expire`);
-            if (!item || !expire) {
-                return '';
-            }
-            if (Date.now() > Number(expire)) {
-                await this.removeItemState(itemKey);
-                return '';
-            }
-            return item;
-        } catch (e) {
-            console.error('error getting localforage data: ', e.stack);
-            return ''
-        }
-    },
-    async setToken(token: string, expire: number) {
-        try {
-            const mStore = this.mcStore();
-            await mStore.setItem('authToken', token);
-            await mStore.setItem('authTokenExpire', expire);
-        } catch (e) {
-            console.error('error setting/saving localStorage item (setToken):', e.message);
-        }
-    },
-    async removeToken() {
-        try {
-            const mStore = this.mcStore();
-            await mStore.removeItem('authToken');
-            await mStore.removeItem('authTokenExpire');
-        } catch (e) {
-            console.error('error removing localStorage item(removeToken): ', e.message);
-        }
-    },
-    async getToken(): Promise<string> {
-        try {
-            const mStore = this.mcStore();
-            const item: string = await mStore.getItem('authToken') || '',
-                expire = await mStore.getItem('authTokenExpire');
-            if (!item || !expire) {
-                return '';
-            }
-            if (Date.now() > Number(expire)) {
-                // await removeItemState(itemKey);
-                await this.removeToken();
-                await this.removeCurrentUser();
-                return '';
-            }
-            return item;
-        } catch (e) {
-            console.error('error getting localStorage item (getToken): ', e.message);
-            return '';
-        }
-    },
-    async loggedIn(): Promise<boolean> {
-        try {
-            return !!(await this.getToken());
-        } catch (e) {
-            console.error('error getting localStorage item (loggedIn): ', e.message);
-            return false;
-        }
-    },
-    async setLoginName(name: string, expire: number) {
-        try {
-            const mStore = this.mcStore();
-            await mStore.setItem('loginName', name);
-            await mStore.setItem('loginNameExpire', expire);
-        } catch (e) {
-            console.error('error setting/saving localStorage item (setLoginName):', e.message);
-        }
-    },
-    async removeLoginName() {
-        try {
-            const mStore = this.mcStore();
-            await mStore.removeItem('loginName');
-            await mStore.removeItem('loginNameExpire');
-        } catch (e) {
-            console.error('error removing localStorage item(removeLoginName): ', e.message);
-        }
-    },
-    async getLoginName(): Promise<unknown> {
-        try {
-            const mStore = this.mcStore();
-            const item = await mStore.getItem('loginName'),
-                expire = await mStore.getItem('loginNameExpire');
-            if (!item || !expire) {
-                return '';
-            }
-            if (Date.now() > Number(expire)) {
-                await this.removeLoginName();
-                return '';
-            }
-            return item;
-        } catch (e) {
-            console.error('error retrieving localStorage item(getLoginName): ', e.message);
-            return '';
-        }
-    },
-    async setCurrentUser(userInfo: object) {
-        try {
-            const mStore = this.mcStore();
-            await mStore.setItem('currentUser', userInfo);
-        } catch (e) {
-            console.error('error setting localStorage item(setCurrentUser): ', e.message);
-        }
-    },
-    async removeCurrentUser() {
-        try {
-            const mStore = this.mcStore();
-            await mStore.removeItem('currentUser');
-        } catch (e) {
-            console.error('error removing localStorage item(removeCurrentUser): ', e.message);
-        }
-    },
-    async getCurrentUser(): Promise<unknown> {
-        try {
-            const mStore = this.mcStore();
-            const item = await mStore.getItem('currentUser');
-            return item ? item : {};
-        } catch (e) {
-            console.error('error retrieving localStorage item(getCurrentUser): ', e.message);
-            return {};
-        }
-    },
-    async setApiToken(token: string) {
-        try {
-            const mStore = this.mcStore();
-            await mStore.setItem('apiToken', token);
-        } catch (e) {
-            console.error('error setting localStorage item(setApiToken): ', e.message);
-        }
-    },
-    async removeApiToken() {
-        try {
-            const mStore = this.mcStore();
-            await mStore.removeItem('apiToken');
-        } catch (e) {
-            console.error('error removing localStorage item(removeApiToken): ', e.message);
-        }
-    },
-    async getApiToken(): Promise<unknown> {
-        try {
-            const mStore = this.mcStore();
-            const item = await mStore.getItem('apiToken');
-            return item ? item : '';
-        } catch (e) {
-            console.error('error retrieving localStorage item(getApiToken): ', e.message);
-            return '';
-        }
-    },
-
 }

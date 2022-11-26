@@ -1,4 +1,4 @@
-import { LocaleValueType } from "./types.ts";
+import { LocaleValueType, ValueType } from "./types.ts";
 import { isEmptyObject } from "./utilFuncs.ts";
 
 interface Options {
@@ -14,9 +14,9 @@ export interface LocaleFilesType {
     [key: string]: Locale;      // key => language ("enUS", "enCA", "yoruba", "frCA", "frFR" etc.)
 }
 
-export const getLocale = (localeFiles: LocaleFilesType, options: Options = {}): Locale => {
+export const getLocale = (localeFiles: LocaleFilesType, options: Options = {}): Locale | ValueType => {
     // validate localeFiles as an object
-    if (isEmptyObject()) {
+    if (isEmptyObject(localeFiles)) {
         return {
             code: 'paramsError',
             message: 'Locale files should be an object and not empty',

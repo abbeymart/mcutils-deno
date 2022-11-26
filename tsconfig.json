@@ -4,6 +4,10 @@
     "module": "esnext",
     "resolveJsonModule": true,
     "target": "esnext",
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+    ],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "useUnknownInCatchVariables": true

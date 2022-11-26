@@ -1,10 +1,12 @@
-type ValueType =
+export type ValueType =
     Record<string, unknown>
     | Array<Record<string, unknown>>
     | string
     | number
     | Array<string>
     | Array<number>
+    | Date
+    | Array<Date>
     | boolean
     | Array<boolean>;
 

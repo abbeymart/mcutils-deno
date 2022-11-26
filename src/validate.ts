@@ -3,11 +3,12 @@
  * @Company: mConnect.biz | @License: MIT
  * @Description: common validation functions
  */
+import { ObjectType, ValueType } from "./types.ts";
 
-export const isProvided = (param: any): boolean => {
+export const isProvided = (param: ValueType): boolean => {
     // Verify the Required status
     // Validate that the item is not empty / null / undefined
-    return !(param === '' || param === null || param === undefined || Object.keys(param).length === 0);
+    return !(param === "" || param === null || param === undefined || Object.keys(param).length === 0);
 };
 
 export const isEven = (num: number): boolean => {
@@ -30,13 +31,13 @@ export const isNumberFloat = (num: number): boolean => {
     return numberPattern.test(num.toString());
 };
 
-export const isObjectType = (param: object): boolean => {
+export const isObjectType = (param: ObjectType): boolean => {
     "use strict";
     // Validate param is an object, {}
-    return (typeof param === 'object' && !Array.isArray(param));
+    return (typeof param === "object" && !Array.isArray(param));
 };
 
-export const isArrayType = (param: Array<any>): boolean => {
+export const isArrayType = (param: Array<ValueType>): boolean => {
     "use strict";
     // Validate param is an object, []
     return Array.isArray(param);
@@ -60,16 +61,15 @@ export const isUsername = (param: string): boolean => {
     return usernamePattern.test(param);
 };
 
-export const isEmpty = (param: any): boolean => {
+export const isEmpty = (param: ValueType): boolean => {
     "use strict";
-    return (param === '' || param === null || param === undefined ||
-        Object.keys(param).length === 0 ||
+    return (param === "" || param === null || param === undefined ||
+        typeof param === "object" && (Object.keys(param).length === 0 || Object.values(param).length === 0) ||
         (Array.isArray(param) && param.length === 0));
 };
 
-export const isNull = (infoItem: any): boolean => {
-    "use strict";
-    return infoItem === null;
+export const isNull = (infoItem: ValueType): boolean => {
+    return infoItem === null || !infoItem;
 };
 
 export const isEmail = (param: string): boolean => {
@@ -83,7 +83,7 @@ export const isPassword = (param: string): boolean => {
     return testPattern.test(param);
 };
 
-export const isNumberOnRange = (num: number, min: number = 0, max: number = 0) => {
+export const isNumberOnRange = (num: number, min = 0, max = 0) => {
     if ((isNumberDigit(num) || isNumberFloat(num)) && (min < max)) {
         return (num >= min && num <= max)
     }
@@ -116,7 +116,7 @@ export const isPostalCodeUK = (param: string): boolean => {
 };
 
 export const isName = (param: string): boolean => {
-    const namePattern = /^[a-zA-Z'\-]+(\s[a-zA-Z'\-])*[a-zA-Z'\-]*/;   // Abi Charles Africa America
+    const namePattern = /^[a-zA-Z"\-]+(\s[a-zA-Z"\-])*[a-zA-Z"\-]*/;   // Abi Charles Africa America
     return namePattern.test(param);
 };
 
@@ -153,7 +153,7 @@ export const isLanguageCode = (param: string): boolean => {
 
 export const isWordSpace = (param: string): boolean => {
     // words with spaces and hyphens, no numbers
-    const wordSpacePattern = /^[a-zA-Z0-9,()'._&]+[\s\-a-zA-Z0-9,()'._&]*[a-zA-Z0-9,()'._?]*$/;
+    const wordSpacePattern = /^[a-zA-Z0-9,()"._&]+[\s\-a-zA-Z0-9,()"._&]*[a-zA-Z0-9,()"._?]*$/;
     return wordSpacePattern.test(param);
 };
 
