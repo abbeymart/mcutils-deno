@@ -1,7 +1,7 @@
 import { ObjectType, ValueType } from "./types.ts";
 import {
-    camelToUnderscore,
-    currentUrlInfo, getLanguage, isEmptyObject, shortString, strToBool, userBrowser, userIpInfo
+    camelToUnderscore, currentUrlInfo, getLanguage,
+    isEmptyObject, shortString, strToBool, userBrowser, userIpInfo
 } from "./utilFuncs.ts";
 
 export default {

@@ -18,7 +18,7 @@ export const getLocale = (localeFiles: LocaleFilesType, options: Options = {}): 
     // validate localeFiles as an object
     if (isEmptyObject(localeFiles)) {
         return {
-            code: 'paramsError',
+            code   : 'paramsError',
             message: 'Locale files should be an object and not empty',
         };
     }

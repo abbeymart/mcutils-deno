@@ -1,4 +1,4 @@
-import {ObjectType} from "./types.ts";
+import { ObjectType } from "./types.ts";
 
 export const isEmptyObject = (val: ObjectType): boolean => {
     return !(Object.keys(val).length > 0 && Object.values(val).length > 0);
@@ -8,7 +8,7 @@ export function shortString(str: string, maxLength = 20): string {
     return str.toString().length > maxLength ? str.toString().substr(0, maxLength) + "..." : str.toString();
 }
 
-export function strToBool(val= "n"): boolean {
+export function strToBool(val = "n"): boolean {
     const strVal = val.toLowerCase();
     if (strVal === "true" || strVal === "t" || strVal === "yes" || strVal === "y") {
         return true;
@@ -21,15 +21,15 @@ export const userIpInfo = async (ipUrl = "https://ipinfo.io", options = {}): Pro
     // TODO: use other method besides ipinfo.io, due to query limit (i.e. 429 error)
     try {
         // const reqH = options && options.headers? options. headers : {};
-        const reqHeaders =  {"Content-Type": "application/json"};
-        options          = Object.assign({}, options, {
+        const reqHeaders = {"Content-Type": "application/json"};
+        options = Object.assign({}, options, {
             method : "GET",
             mode   : "cors",
             headers: reqHeaders,
         });
-        const response   = await fetch(ipUrl, options);
-        let result       = await response.json();
-        result           = result ? JSON.parse(result) : null;
+        const response = await fetch(ipUrl, options);
+        let result = await response.json();
+        result = result ? JSON.parse(result) : null;
         if (response.ok) {
             return result;
         }
@@ -116,7 +116,7 @@ export const pluralize = (n: number, itemName: string, itemPlural = ""): string 
     return result;
 };
 
-export const  camelToUnderscore = (key: string): string => {
+export const camelToUnderscore = (key: string): string => {
     return key.replace(/([A-Z])/g, "_$1").toLowerCase();
 }
 
