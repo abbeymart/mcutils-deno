@@ -116,9 +116,27 @@ export const pluralize = (n: number, itemName: string, itemPlural = ""): string 
     return result;
 };
 
-export const camelToUnderscore = (key: string): string => {
+// camelToUnderscore computes and returns the underscore field name for the database table.
+export function camelToUnderscore(key: string): string {
     return key.replace(/([A-Z])/g, "_$1").toLowerCase();
 }
+
+// camelCase computes and returns the camelCase field name from a sep (default to _) fieldName.
+export const toCamelCase = (text: string, sep = "_"): string => {
+    // accepts word/text and separator(' ', '_', '__', '.')
+    const textArray = text.split(sep);
+    // convert the first word to lowercase
+    const firstWord = textArray[0].toLowerCase();
+    // convert other words: first letter to upper case and other letters to lowercase
+    const otherWords = textArray.slice(1).map((item) => {
+        // convert first letter to upper case
+        const item0 = item[0].toUpperCase();
+        // convert other letters to lowercase
+        const item1N = item.slice(1).toLowerCase();
+        return `${item0}${item1N}`;
+    });
+    return `${firstWord}${otherWords.join("")}`;
+};
 
 export const getLanguage = (userLang = 'en-US'): string => {
     // Define/set default language variable
