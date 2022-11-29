@@ -8,8 +8,7 @@
 ## Usage
 
 ```ts
-import { assertEquals, assertNotEquals, postTestResult } from "https://deno.land/x/mcutils/mod.ts";
-
+import { isEmptyObject, mean, minMax, standardDeviation, isEmail } from "https://deno.land/x/mcutils@v0.2.0/mod.ts";
 // See the test folder for different test cases / scenarios and usage
 
 ```

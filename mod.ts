@@ -8,7 +8,7 @@
  * Test case composition - see the test folder
  *
  * ```ts
- * import { assertEquals, assertNotEquals, postTestResult } from "https://deno.land/x/mcutils/mod.ts";
+ * import { getLanguage, isEmptyObject, mean, minMax, standardDeviation, isEmail } from "https://deno.land/x/mcutils@v0.2.0/mod.ts";
  *
  * ```
  *
