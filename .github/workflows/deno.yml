@@ -1,4 +1,4 @@
-name: mConnect Simple & Hash Cache Module
+name: mConnect Shared Utility Functions for deno, nodejs, js and ts applications
 
 on: [ push, pull_request ]
 

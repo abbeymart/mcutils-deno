@@ -21,6 +21,14 @@ export interface Options {
     language?: string;
 }
 
+export interface Locale {
+    [key: string]: LocaleValueType;
+}
+
+export interface LocaleFilesType {
+    [key: string]: Locale;      // key => language ("en-US", "en-CA", "yoruba", "fr-CA", "fr-FR" etc.)
+}
+
 export interface MessageObject {
     [key: string]: string;
 }

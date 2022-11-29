@@ -1,18 +1,5 @@
-import { LocaleValueType, ValueType } from "./types.ts";
+import { ValueType, Options, Locale, LocaleFilesType, } from "./types.ts";
 import { isEmptyObject } from "./utilFuncs.ts";
-
-export interface Options {
-    type?: string;
-    language?: string;
-}
-
-export interface Locale {
-    [key: string]: LocaleValueType;
-}
-
-export interface LocaleFilesType {
-    [key: string]: Locale;      // key => language ("en-US", "en-CA", "yoruba", "fr-CA", "fr-FR" etc.)
-}
 
 export const getLocale = (localeFiles: LocaleFilesType, options: Options = {}): Locale | ValueType => {
     // validate localeFiles as an object

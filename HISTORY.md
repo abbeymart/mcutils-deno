@@ -3,10 +3,10 @@
 ***** Work-In-Progress ***** 
 - TODO: update documentation
 
-## Version 0.2.0
+## Version 0.1.1
 
-- Release date: Nov 30, 2022
-- Refactored-tested-release-for-deno-v0.2.0
+- Release date: Nov 29, 2022
+- Resolved-import-refs-added-testcase-placeholders-v0.1.1
 
 ## Version 0.1.0
 
