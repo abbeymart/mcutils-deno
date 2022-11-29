@@ -86,34 +86,40 @@ export const getPath = (req: Request): string => {
     return itemPath ? itemPath : "mc";
 };
 
-export const getFullName = (firstName: string, lastName: string, middleName = ""): string => {
-    if (firstName && middleName && lastName) {
-        return (firstName + " " + middleName + " " + lastName);
+export const getFullName = (firstname: string, lastname: string, middlename = ""): string => {
+    if (firstname && middlename && lastname) {
+        return (firstname + " " + middlename + " " + lastname);
     }
-    return (firstName + " " + lastName);
+    return (firstname + " " + lastname);
 };
 
-export const getNames = (fullName: string): { firstName: string, lastName: string, middleName?: string } => {
+export interface GetNames {
+    firstname?: string;
+    middlename?: string;
+    lastname?: string;
+}
+
+export const getNames = (fullName: string): GetNames => {
     const nameParts = fullName.split("");
-    let firstName, lastName, middleName;
+    let firstname, lastname, middlename;
     if (nameParts.length > 2) {
-        firstName = nameParts[0];
-        lastName = nameParts[2];
-        middleName = nameParts[1];
+        firstname = nameParts[0];
+        lastname = nameParts[2];
+        middlename = nameParts[1];
         return {
-            firstName,
-            middleName,
-            lastName,
+            firstname,
+            middlename,
+            lastname,
         };
     } else {
-        firstName = nameParts[0];
-        lastName = nameParts[1];
+        firstname = nameParts[0];
+        lastname = nameParts[1];
         return {
-            firstName,
-            lastName,
+            firstname,
+            lastname,
         };
     }
-    // Return firstName, middleName and lastName based on fullName components ([0],[1],[2])
+    // Return firstname, middlename and lastname based on fullName components ([0],[1],[2])
 };
 
 // pluralize returns the plural value for the given item-name.
@@ -244,6 +250,25 @@ export function factorialFromNumGen(num: number) {
         result *= val;
     }
     return result;
+}
+
+export function fibos(num: number): Array<number> {
+    const fiboArray: Array<number> = [1, 1];
+    let i = 0
+    while (i < num) {
+        const prev = fiboArray[fiboArray.length - 1];
+        const prev2 = fiboArray[fiboArray.length -2];
+        fiboArray.push(prev+prev2)
+        i++
+    }
+    return fiboArray
+}
+
+// naturalNumbers generator-function yields/generates natural numbers up to the count value.
+export function* naturalNumbers(count: number) {
+    for (let cnt = 0; cnt < count; cnt++) {
+        yield cnt;
+    }
 }
 
 export const fiboTail = (n: number, current: number, next: number): number => {

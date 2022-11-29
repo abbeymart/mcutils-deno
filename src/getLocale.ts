@@ -1,7 +1,7 @@
 import { LocaleValueType, ValueType } from "./types.ts";
 import { isEmptyObject } from "./utilFuncs.ts";
 
-interface Options {
+export interface Options {
     type?: string;
     language?: string;
 }
@@ -11,25 +11,25 @@ export interface Locale {
 }
 
 export interface LocaleFilesType {
-    [key: string]: Locale;      // key => language ("enUS", "enCA", "yoruba", "frCA", "frFR" etc.)
+    [key: string]: Locale;      // key => language ("en-US", "en-CA", "yoruba", "fr-CA", "fr-FR" etc.)
 }
 
 export const getLocale = (localeFiles: LocaleFilesType, options: Options = {}): Locale | ValueType => {
     // validate localeFiles as an object
     if (isEmptyObject(localeFiles)) {
         return {
-            code   : 'paramsError',
-            message: 'Locale files should be an object and not empty',
+            code   : "paramsError",
+            message: "Locale files should be an object and not empty",
         };
     }
 
-    const localeType = options && options.type ? options.type : '';
-    const language = options && options.language ? options.language : 'en-US';
+    const localeType = options && options.type ? options.type : "";
+    const language = options && options.language ? options.language : "en-US";
 
     // set the locale file contents
     const myLocale = localeFiles[language];
 
-    if (localeType === 'mcConstants') {
+    if (localeType === "mcConstants") {
         return {
             getShortDesc() {
                 return myLocale.SHORT_DESC;
