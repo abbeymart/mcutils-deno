@@ -25,9 +25,9 @@ export const isNumberDigit = (num: number | string): boolean => {
     return numberPattern.test(num.toString());
 };
 
-export const isNumberFloat = (num: number): boolean => {
+export const isNumberFloat = (num: number | string): boolean => {
     // Validate that param is a number (float): 0.90 | 99.9 | 33.3 | 44.40
-    const numberPattern = /^([0-9])+([.])?([0-9])*$/;
+    const numberPattern = /^([0-9])+([.,])([0-9])*$/;
     return numberPattern.test(num.toString());
 };
 
@@ -43,15 +43,16 @@ export const isArrayType = (param: Array<ValueType>): boolean => {
     return Array.isArray(param);
 };
 
+// isStringChar validates that param is characters string (no numbers), including spaces.
 export const isStringChar = (param: string): boolean => {
     // Validate that param is a string (characters only) -- use regEx
-    const charRegEx = /^[a-zA-Z&$_\-]+$/;
+    const charRegEx = /^[a-z\sA-Z&$_\-]+$/;
     return charRegEx.test(param);
 };
 
+// isStringAlpha validates that param is alphanumeric string (chars/numbers only), including spaces.
 export const isStringAlpha = (param: string): boolean => {
-    // Validate that param is a string (alphanumeric, chars/numbers only)
-    const alphaNumericPattern = /^[a-zA-Z0-9-_-]+$/;
+    const alphaNumericPattern = /^[a-z\sA-Z0-9-_-]+$/;
     return alphaNumericPattern.test(param);
 };
 
@@ -68,10 +69,6 @@ export const isEmpty = (param: ValueType): boolean => {
         (Array.isArray(param) && param.length === 0));
 };
 
-export const isNull = (infoItem: ValueType): boolean => {
-    return infoItem === null || !infoItem;
-};
-
 export const isEmail = (param: string): boolean => {
     const testPattern = /^[0-9a-zA-Z]+([0-9a-zA-Z]*[-._+])*[0-9a-zA-Z]+@[0-9a-zA-Z]+([-.][0-9a-zA-Z]+)*([0-9a-zA-Z]*[.])[a-zA-Z]{2,6}$/;
     // const testPattern = /^[0-9a-zA-Z]+([\-._][0-9a-zA-Z]+)*@[0-9a-zA-Z]+([\-.][0-9a-zA-Z]+)*([.])[a-zA-Z]{2,6}$/;
@@ -83,43 +80,24 @@ export const isPassword = (param: string): boolean => {
     return testPattern.test(param);
 };
 
-export const isNumberOnRange = (num: number, min = 0, max = 0) => {
-    if ((isNumberDigit(num) || isNumberFloat(num)) && (min < max)) {
-        return (num >= min && num <= max)
-    }
-    return false;
-};
-
 export const isPhone = (param: string): boolean => {
     const phonePattern = /^([1-9]{1,3})?[\-. ]?(\(\d{3}\)?[\-. ]?|\d{3}?[\-. ]?)?\d{3}?[\-. ]?\d{4}$/;
     return phonePattern.test(param);
 };
 
+// isPostalCode validate postal codes.
 export const isPostalCode = (param: string): boolean => {
-    const postCodePattern = /^[a-zA-Z0-9]+(\s)?[a-zA-Z0-9]*/;
+    const postCodePattern = /^[a-zA-Z0-9]*(\s)?[a-zA-Z0-9]*/;
     return postCodePattern.test(param);
 };
 
-export const isPostalCodeUS = (param: string): boolean => {
-    const postCodePattern = /^[a-zA-Z0-9]+(\s)?[a-zA-Z0-9]*/;
-    return postCodePattern.test(param);
-};
-
-export const isPostalCodeCanada = (param: string): boolean => {
-    const postCodePattern = /^[a-zA-Z0-9]+(\s)?[a-zA-Z0-9]*/;
-    return postCodePattern.test(param);
-};
-
-export const isPostalCodeUK = (param: string): boolean => {
-    const postCodePattern = /^[a-zA-Z0-9]+(\s)?[a-zA-Z0-9]*/;
-    return postCodePattern.test(param);
-};
-
+// isName validate a given name as valid characters.
 export const isName = (param: string): boolean => {
     const namePattern = /^[a-zA-Z"\-]+(\s[a-zA-Z"\-])*[a-zA-Z"\-]*/;   // Abi Charles Africa America
     return namePattern.test(param);
 };
 
+// isURL validate a URL as valid.
 export const isURL = (param: string): boolean => {
     // Abi Charles Africa America
     const namePattern = /^[a-zA-Z0-9\-\\_.:]+$/;

@@ -41,7 +41,7 @@ jobs:
         run: deno run test/stats.test.ts
       - name: Run tests - maths
         run: deno run test/maths.test.ts
-      - name: Run tests - validate (pending)
+      - name: Run tests - validate
         run: deno run test/validate.test.ts
       - name: Run tests - utilFuncs (pending)
         run: deno run test/utilFuncs.test.ts

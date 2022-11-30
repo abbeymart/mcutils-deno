@@ -3,6 +3,11 @@
 ***** Work-In-Progress ***** 
 - TODO: update documentation
 
+## Version 0.1.4
+
+- Release date: Nov 30, 2022
+- Validation-methods-refactored-test-cases-tested-v0.1.4
+
 ## Version 0.1.3
 
 - Release date: Nov 30, 2022
