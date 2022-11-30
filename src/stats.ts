@@ -51,7 +51,7 @@ export const max = (arr: Array<number>): number => {
     return arr[0];
 }
 
-// Minimum and maximum values object type
+// Minimum and maximum values object type.
 export interface MinMax {
     minimum: number;
     maximum: number;
@@ -67,17 +67,20 @@ export const minMax = (arr: Array<number>): MinMax => {
     };
 }
 
+
+// TODO: complete the stats-function below
+
 // meanSquareError returns the mean-square-error value from the array of numbers.
 export const meanSquareError = () => {
 
 }
 
-// meanSquareRootError returns the mean-square-root-error value from the array of numbers
+// meanSquareRootError returns the mean-square-root-error value from the array of numbers.
 export const meanSquareRootError = () => {
 
 }
 
-// variance returns the variance value from the array of numbers
+// variance returns the variance value from the array of numbers.
 export const variance = () => {
 
 }

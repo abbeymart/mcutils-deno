@@ -10,7 +10,10 @@ export type ValueType =
     | boolean
     | Array<boolean>;
 
-export type LocaleValueType = string | number | boolean
+
+export type LocaleFunc = () => string | number | boolean;
+
+export type LocaleValueType = ValueType | LocaleFunc;
 
 export interface ObjectType {
     [key: string]: ValueType;

@@ -3,6 +3,11 @@
 ***** Work-In-Progress ***** 
 - TODO: update documentation
 
+## Version 0.1.2
+
+- Release date: Nov 29, 2022
+- Test-cases-updated-tested-v0.1.2
+
 ## Version 0.1.1
 
 - Release date: Nov 29, 2022

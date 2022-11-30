@@ -1,13 +1,13 @@
 import {
-    ArrayOfNumber, ArrayOfString, ArrayOfSymbol, Locale, LocaleFilesType, MinMax, Options
+    ArrayOfNumber, ArrayOfString, Locale, LocaleFilesType, MinMax, Options
 } from "../../src/index.ts";
 
 // collection
 export const arrayOfNumber: ArrayOfNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,];
 export const arrayOfString: ArrayOfString = ["abc", "ab2", "abc3", "ab4", "abc5", "ab6", "abc7", "ab8", "abc9",
     "ab10",];
-export const arrayOfSymbol: ArrayOfSymbol = [Symbol("abc"), Symbol("ab2"), Symbol("ab3"), Symbol("ab4"), Symbol("ab5"),
-    Symbol("ab6"), Symbol("ab7"), Symbol("ab8"), Symbol("ab9"), Symbol("ab10"),];
+// export const arrayOfSymbol: ArrayOfSymbol = [Symbol("abc"), Symbol("ab2"), Symbol("ab3"), Symbol("ab4"), Symbol("ab5"),
+//     Symbol("ab6"), Symbol("ab7"), Symbol("ab8"), Symbol("ab9"), Symbol("ab10"),];
 
 export const filterEvenNumFunc = (val: number): boolean => val % 2 === 0;
 export const filterEvenNumFuncResult = [2, 4, 6, 8, 10,];
@@ -32,37 +32,38 @@ export const localeConstantOptions: Options = {
     type    : "mcConstants",
     language: "en-CA",
 };
-export const localLabelObject: Locale = {
+export const localeLabelObject: Locale = {
     code      : "Code",
     name      : "Name",
     desc      : "Description",
     postalCode: "Postal Code",
 };
 
-export const localConstantObject: Locale = {
+export const localeConstantObject: Locale = {
     SHORT_DESC  : 20,
     DEFAULT_LANG: "en-US",
 };
 
-export const localLabelFiles: LocaleFilesType = {
-    "en-US": localLabelObject,
-    "en-CA": localLabelObject,
+export const localeLabelFiles: LocaleFilesType = {
+    "en-US": localeLabelObject,
+    "en-CA": localeLabelObject,
 };
 
-export const localConstantFiles: LocaleFilesType = {
-    "en-US": localConstantObject,
-    "en-CA": localConstantObject,
+export const localeConstantFiles: LocaleFilesType = {
+    "en-US": localeConstantObject,
+    "en-CA": localeConstantObject,
 };
 
 // stats
 
-export const meanValue = 5.5;
-export const medianValue = 5.5;
-export const minValue = 1;
-export const maxValue = 10;
-export const minMax: MinMax = {
+export const meanResult = 5.5;
+export const medianResult = 5.5;
+export const minResult = 1;
+export const maxResult = 10;
+export const minMaxResult: MinMax = {
     minimum: 1,
     maximum: 10,
 };
 
-export const stdDeviation = 0.25;   // TODO: update with the computed/actual value
+export const stdDeviationResult = 3.0276503540974917;   // 16 decimal places
+export const stdDeviationResultEst = 3.02765;

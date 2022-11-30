@@ -1,64 +1,41 @@
 import {
     assertEquals, assertNotEquals, assertNotStrictEquals, assertStrictEquals,
-    delay, mcTest, ObjectType, postTestResult,
+    mcTest, postTestResult, ValueType,
 } from "../test_deps.ts";
-
-// test-data
-const result1 = 100,
-    result2 = 200,
-    result3 = {"Name": "Abi"},
-    result4 = {"location": "Abi"};
-
-function Expr1(): number {
-    return 100;
-}
-
-function Expr2(): number {
-    return 200;
-}
-
-function Expr3(): ObjectType {
-    return result3;
-}
-
-function Expr4(): ObjectType {
-    return result4;
-}
+import { getLocale, Locale, LocaleFunc } from "../src/index.ts";
+import {
+    localeConstantFiles, localeConstantObject, localeConstantOptions, localeLabelOptions, localeLabelFiles,
+    localeLabelObject
+} from "./data/testData.ts";
 
 (async () => {
+    const startTime = Date.now();
     await mcTest({
-        name    : "Test Series 100: ",
+        name    : "Successfully returns locale labels object / record",
         testFunc: () => {
-            assertEquals(Expr1(), result1, "Expected outcome: 100");
-            assertEquals(Expr2(), result2, "Expected outcome: 200");
-            assertNotEquals(Expr1(), result2, "Expected expr and result not equals");
-            assertNotEquals(Expr2(), result1, "Expected expr and result not equals");
-            assertStrictEquals(Expr3(), result3, "Expected outcome: strictly equals");
-            assertStrictEquals(Expr4(), result4, "Expected outcome: strictly equals");
+            const localeRes = getLocale(localeLabelFiles, localeLabelOptions) as Locale;
+            console.log("locale-labels-Res: ", localeRes);
+            assertEquals(localeRes["code"] as ValueType, localeLabelObject.code as ValueType, `Expected outcome: ${localeLabelObject.code}`);
+            assertEquals(localeRes["name"] as ValueType, localeLabelObject.name as ValueType, `Expected outcome: ${localeLabelObject.name}`);
+            assertNotEquals(localeRes["code"] as ValueType, "name", `Expected outcome: ${localeLabelObject.code}`);
+            assertNotEquals(localeRes["name"] as ValueType, "code", `Expected outcome: ${localeLabelObject.name}`);
+            assertStrictEquals(localeRes as ValueType, (localeLabelObject), `Expected outcome: ${(localeLabelObject)}`);
+            assertNotStrictEquals(localeRes as ValueType, localeLabelObject.name as ValueType, `Expected outcome: ${(localeLabelObject)}`);
         },
     });
     await mcTest({
-        name    : "Test Series 200: ",
-        testFunc: async () => {
-            await delay(200);
-            assertEquals(Expr1(), result1, "Expected outcome: 100");
-            assertEquals(Expr2(), result2, "Expected outcome: 200");
-            assertNotEquals(Expr1(), result2, "Expected expr and result not equals");
-            assertNotEquals(Expr2(), result1, "Expected expr and result not equals");
-            assertNotStrictEquals(
-                Expr3(),
-                result4,
-                "Expected outcome: not strictly equals",
-            );
-            assertNotStrictEquals(
-                Expr4(),
-                result3,
-                "Expected outcome: not strictly equals",
-            );
+        name    : "Successfully return constants object / record",
+        testFunc: () => {
+            const localeRes = getLocale(localeConstantFiles, localeConstantOptions) as Locale;
+            console.log("locale-constants-Res: ", localeRes);
+            assertEquals((localeRes["getShortDesc"] as LocaleFunc)(), localeConstantObject["SHORT_DESC"] as ValueType, `Expected outcome: ${localeConstantObject["SHORT_DESC"]}`);
+            assertEquals((localeRes.getDefaultLanguage as LocaleFunc)(), localeConstantObject["DEFAULT_LANG"] as ValueType, `Expected outcome: ${localeConstantObject["DEFAULT_LANG"]}`);
+            assertNotEquals((localeRes.getShortDesc as LocaleFunc)(), 100, `Expected outcome: ${localeConstantObject["SHORT_DESC"]}`);
+            assertNotEquals((localeRes.getDefaultLanguage as LocaleFunc)(), "fr-CA", `Expected outcome: ${localeConstantObject["DEFAULT_LANG"]}`);
         },
     });
-
-
 
     postTestResult();
+
+    console.log(`\nTest Completed in ${Date.now() - startTime}ms\n`);
 })();

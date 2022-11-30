@@ -31,5 +31,19 @@ jobs:
       - name: Build Deno Module
         run: deno run --reload mod.ts
 
-      - name: Run tests
-        run: deno run test.ts
+      - name: Run tests - getLocale
+        run: deno run test/getLocale.test.ts
+      - name: Run tests - collection
+        run: deno run test/collection.test.ts
+      - name: Run tests - collection2
+        run: deno run test/collection2.test.ts
+      - name: Run tests - stats
+        run: deno run test/stats.test.ts
+      - name: Run tests - maths (pending)
+        run: deno run test/maths.test.ts
+      - name: Run tests - utilFuncs (pending)
+        run: deno run test/utilFuncs.test.ts
+      - name: Run tests - validate (pending)
+        run: deno run test/validate.test.ts
+      - name: Run tests - utils (pending)
+        run: deno run test/utils.test.ts
