@@ -1,4 +1,3 @@
-import { ArrayOfNumber, ArrayOfString, ArrayOfSymbol } from "../../src/index.ts";
 
 export const emptyObjectValue = {};
 export const nonEmptyObjectValue = {name: "Abi", location: "Toronto"};

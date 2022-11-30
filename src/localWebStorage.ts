@@ -1,7 +1,7 @@
 /**
  * @Author: abbeymart | Abi Akindele | @Created: 2020-06-25 | @Updated: 2020-06-26
  * @Company: mConnect.biz | @License: MIT
- * @Description: local web storage functions
+ * @Description: local web storage functions - for client/UI
  */
 import { ObjectType, ValueType } from "./types.ts";
 

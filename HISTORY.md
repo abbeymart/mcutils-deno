@@ -3,6 +3,11 @@
 ***** Work-In-Progress ***** 
 - TODO: update documentation
 
+## Version 0.1.3
+
+- Release date: Nov 30, 2022
+- Maths-methods-refactored-test-cases-tested-v0.1.3
+
 ## Version 0.1.2
 
 - Release date: Nov 29, 2022

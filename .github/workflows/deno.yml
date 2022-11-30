@@ -1,4 +1,4 @@
-name: mConnect Shared Utility Functions for deno, nodejs, js and ts applications
+name: mConnect Shared Utility Functions for deno, nodejs and typescript applications
 
 on: [ push, pull_request ]
 
@@ -39,11 +39,11 @@ jobs:
         run: deno run test/collection2.test.ts
       - name: Run tests - stats
         run: deno run test/stats.test.ts
-      - name: Run tests - maths (pending)
+      - name: Run tests - maths
         run: deno run test/maths.test.ts
-      - name: Run tests - utilFuncs (pending)
-        run: deno run test/utilFuncs.test.ts
       - name: Run tests - validate (pending)
         run: deno run test/validate.test.ts
+      - name: Run tests - utilFuncs (pending)
+        run: deno run test/utilFuncs.test.ts
       - name: Run tests - utils (pending)
         run: deno run test/utils.test.ts
