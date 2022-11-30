@@ -1,6 +1,6 @@
 import {
     assertEquals, assertNotEquals, mcTest, postTestResult,
-} from "https://deno.land/x/mctest@v0.1.4/src/mcTest.ts";
+} from "../test_deps.ts";
 import {
     isArrayType, isEmail, isEmpty, isEven, isNumberDigit, isNumberFloat, isObjectType, isOdd, isPassword, isPhone,
     isPostalCode,

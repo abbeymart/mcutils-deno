@@ -1,6 +1,6 @@
 import {
     assertEquals, assertNotEquals, mcTest, postTestResult,
-} from "https://deno.land/x/mctest@v0.1.4/src/mcTest.ts";
+} from "../test_deps.ts";
 import { counterGeneric, set, setOfNumber, setOfString, setOfSymbol, } from "../src/index.ts";
 import {
     booleanParams,

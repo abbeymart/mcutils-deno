@@ -42,7 +42,7 @@ export interface ComputationResponse {
     message?: string;
 }
 
-export const PERMITTED_SEPARATORS = [" ", "_", "__", ".", "|"];
+export const PERMITTED_SEPARATORS = [" ", "_", "__", ".", "|", "-"];
 
 // function types
 

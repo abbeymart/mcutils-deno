@@ -8,7 +8,7 @@
 ## Usage
 
 ```ts
-import { isEmptyObject, mean, minMax, standardDeviation, isEmail } from "https://deno.land/x/mcutils@v0.1.4/mod.ts";
+import { isEmptyObject, mean, minMax, standardDeviation, isEmail } from "https://deno.land/x/mcutils@v0.1.5/mod.ts";
 // See the test folder for different test cases / scenarios and usage
 
 ```

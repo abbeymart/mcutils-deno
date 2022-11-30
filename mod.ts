@@ -8,7 +8,7 @@
  * Test case composition - see the test folder
  *
  * ```ts
- * import { getLanguage, isEmptyObject, mean, minMax, standardDeviation, isEmail } from "https://deno.land/x/mcutils@v0.1.4/mod.ts";
+ * import { getLanguage, isEmptyObject, mean, minMax, standardDeviation, isEmail } from "https://deno.land/x/mcutils@v0.1.5/mod.ts";
  *
  * ```
  *

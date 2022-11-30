@@ -1,6 +1,6 @@
 import {
     assertEquals, assertNotEquals, mcTest, postTestResult,
-} from "https://deno.land/x/mctest@v0.1.4/src/mcTest.ts";
+} from "../test_deps.ts";
 import {
     ArrayOfNumber, filterGen, mapGen, takeVer2, takeGenVer2, takeGen, take, ArrayOfString,
 } from "../src/index.ts";

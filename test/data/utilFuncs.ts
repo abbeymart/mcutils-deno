@@ -1,22 +1,22 @@
-
 export const emptyObjectValue = {};
 export const nonEmptyObjectValue = {name: "Abi", location: "Toronto"};
 
 export const shortStringParam = "This is a great title for testing";
 export const short21StringResult = "This is a great title...";
+export const short20StringResult = "This is a great titl...";
 
 export const paramObjectMsgData = {name: "required", location: "optional"};
 export const paramObjectMsgResult = `name: required | location: optional`;
 
-export const strToBoolTrue = "true";
-export const strToBoolYes = "yes";
-export const strToBoolY = "Y";
-export const strToBoolFalse = "false";
-export const strToBoolNo = "no";
-export const strToBoolN = "N";
-export const strToBool1 = 1;
-export const strToBool0 = 0;
-export const strToBoolEmpty = "";
+// export const strTrueToBool = "true";
+// export const strYesToBool = "yes";
+// export const strYToBool = "Y";
+// export const strFalseToBool = "false";
+// export const strNoToBool = "no";
+// export const strNToBool = "N";
+// export const str1ToBool = 1;
+// export const str0ToBool = 0;
+// export const strEmptyToBool = "";
 
 export const firstname = "Abi";
 export const middlename = "John";
@@ -29,4 +29,4 @@ export const underscoreValue = "country_code";
 export const pascalCaseValue = "CountryCode";
 export const dotSepParam = "country.code";
 export const pipeSepParam = "country|code";
-export const SpaceSepParam = "country code";
+export const spaceSepParam = "country code";

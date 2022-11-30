@@ -3,6 +3,11 @@
 ***** Work-In-Progress ***** 
 - TODO: update documentation
 
+## Version 0.1.5
+
+- Release date: Nov 30, 2022
+- utilFuncs-refactored-test-cases-tested-v0.1.5
+
 ## Version 0.1.4
 
 - Release date: Nov 30, 2022

@@ -1,6 +1,6 @@
 import {
     assertEquals, assertNotEquals, assertNotStrictEquals, assertStrictEquals, mcTest, postTestResult, ValueType
-} from "https://deno.land/x/mctest@v0.1.4/src/mcTest.ts";
+} from "../test_deps.ts";
 import { getLocale, Locale, LocaleFunc } from "../src/index.ts";
 import {
     localeConstantFiles, localeConstantObject, localeConstantOptions, localeLabelFiles, localeLabelObject,
