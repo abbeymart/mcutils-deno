@@ -1,5 +1,7 @@
 
 // leapYear determines if the given year is a leap year, i.e. February day === 29.
+import { ArrayOfNumber, ArrayOfString, ArrayOfSymbol, ArrayValue, CounterType, CounterValueType } from "./types.ts";
+
 export const leapYear = (year: number): boolean => {
     // by setting the day to the 29th and checking if the day remains
     const febDate = new Date(year, 1, 29, 23, 0, 0, 0);
@@ -178,18 +180,6 @@ export function* pythagorasGen(limit: number) {
             }
         }
     }
-}
-
-// counters
-export type ArrayValue<T> = Array<T>;
-export type ArrayOfString = Array<string>;
-export type ArrayOfNumber = Array<number>;
-export type ArrayOfSymbol = Array<symbol>;
-
-export type CounterValueType = string | number | symbol;
-
-export interface CounterType {
-    [key: CounterValueType]: number;
 }
 
 // counterGeneric supports types - number, string and symbol only.

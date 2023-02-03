@@ -1,7 +1,7 @@
-import { Options, Locale, LocaleFilesType, } from "./types.ts";
+import { LocaleOptions, Locale, LocaleFilesType, } from "./types.ts";
 import { isEmptyObject } from "./utilFuncs.ts";
 
-export const getLocale = (localeFiles: LocaleFilesType, options: Options = {}): Locale => {
+export const getLocale = (localeFiles: LocaleFilesType, options: LocaleOptions = {}): Locale => {
     // validate localeFiles as an object
     if (isEmptyObject(localeFiles)) {
         return {

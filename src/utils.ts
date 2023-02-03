@@ -1,18 +1,6 @@
 import { ObjectType, ValueType } from "./types.ts";
-import {
-    camelCaseToUnderscore, currentUrlInfo, getLanguage,
-    isEmptyObject, shortString, stringToBool, userBrowser, userIpInfo
-} from "./utilFuncs.ts";
 
 export default {
-    isEmptyObject,
-    shortString,
-    strToBool        : stringToBool,
-    userIpInfo,
-    userBrowser,
-    currentUrlInfo,
-    camelToUnderscore: camelCaseToUnderscore,
-    getLanguage,
     getPath(req: Request): string {
         let itemPath = req.url || '/mc';
         itemPath = itemPath.split('/')[1];

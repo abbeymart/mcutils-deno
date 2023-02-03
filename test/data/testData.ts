@@ -1,5 +1,5 @@
 import {
-    ArrayOfNumber, ArrayOfString, Locale, LocaleFilesType, MinMax, Options
+    ArrayOfNumber, ArrayOfString, Locale, LocaleFilesType, MinMax, LocaleOptions
 } from "../../src/index.ts";
 
 // collection
@@ -24,11 +24,11 @@ export const take7CountResult = 7;
 export const take7StringResult = ["abc", "ab2", "abc3", "ab4", "abc5", "ab6", "abc7",];
 
 // getLocale
-export const localeLabelOptions: Options = {
+export const localeLabelOptions: LocaleOptions = {
     type    : "mcLabels",
     language: "en-CA",
 };
-export const localeConstantOptions: Options = {
+export const localeConstantOptions: LocaleOptions = {
     type    : "mcConstants",
     language: "en-CA",
 };
