@@ -185,3 +185,9 @@ export interface CounterResult<T extends ValueType> {
 export interface  ObjectCounterResult<T extends ObjectType> {
     [key: string]: CounterObjectValue<T>;
 }
+
+export interface MatrixResult {
+    code: string;
+    message: string;
+    result: Array<Array<number>> | Array<number>;
+}
