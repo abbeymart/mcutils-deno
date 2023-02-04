@@ -1,6 +1,7 @@
 import {
     ArrayValue,
-    ComputationResponse, CounterResult, Locale, LocaleOptions, MessageObject, ObjectType, PERMITTED_SEPARATORS,
+    ComputationResponse, CounterResult, Locale, LocaleFilesType, LocaleOptions, MessageObject, ObjectType,
+    PERMITTED_SEPARATORS,
     ValueType
 } from "./types.ts";
 import { getResMessage, ResponseMessage } from "../deps.ts";
@@ -246,7 +247,7 @@ export const getPath = (req: Request): string => {
 
 // Validation functions
 
-export function getLocale<T>(localeFiles: Locale<T>, options: LocaleOptions = {}): T {
+export function getLocale(localeFiles: LocaleFilesType, options: LocaleOptions = {}): Locale {
     // validate localeFiles as an object
     if (typeof localeFiles !== "object" || isEmptyObject(localeFiles as ObjectType)) {
         throw new Error("Locale files should be an object and not empty")

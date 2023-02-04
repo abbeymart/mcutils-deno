@@ -17,7 +17,7 @@ export type LocaleFunc = () => string | number | boolean;
 export type LocaleValueType = ValueType | LocaleFunc;
 
 export interface ObjectType {
-    [key: string]: ValueType;
+    [key: string]: LocaleValueType;
 }
 
 export interface LocaleOptions {
@@ -25,12 +25,12 @@ export interface LocaleOptions {
     language?: string;
 }
 
-export interface Locale<T> {
-    [key: string]: T;
+export interface Locale {
+    [key: string]: LocaleValueType;
 }
 
-export interface LocaleFilesType<T> {
-    [key: string]: Locale<T>;      // key => language ("en-US", "en-CA", "yoruba", "fr-CA", "fr-FR" etc.)
+export interface LocaleFilesType {
+    [key: string]: Locale;      // key => language ("en-US", "en-CA", "yoruba", "fr-CA", "fr-FR" etc.)
 }
 
 export interface MessageObject {
@@ -149,7 +149,7 @@ export interface QuartilesType {
 
 // counters
 
-export interface CounterValue<T extends ValueType>  {
+export interface CounterValue<T extends ValueType> {
     count: number;
     value: T;
 }
@@ -165,7 +165,7 @@ export type ArrayOfString = Array<string>;
 export type ArrayOfNumber = Array<number>;
 export type ArrayOfSymbol = Array<symbol>;
 export type ArrayOfInt = Array<number>
-export type ArrayOfFloat  = Array<number>
+export type ArrayOfFloat = Array<number>
 
 export type CounterValueType = string | number | symbol;
 
@@ -177,12 +177,14 @@ export interface CounterType {
 export interface DataCount {
     [key: string]: number;
 }
+
 export type SliceObjectType<T extends ObjectType> = Array<T>
+
 export interface CounterResult<T extends ValueType> {
     [key: string]: CounterValue<T>;
 }
 
-export interface  ObjectCounterResult<T extends ObjectType> {
+export interface ObjectCounterResult<T extends ObjectType> {
     [key: string]: CounterObjectValue<T>;
 }
 
@@ -191,3 +193,10 @@ export interface MatrixResult {
     message: string;
     result: Array<Array<number>> | Array<number>;
 }
+
+// export interface MatrixArrayResult {
+//     code: string;
+//     message: string;
+//     result: Array<number>;
+// }
+
