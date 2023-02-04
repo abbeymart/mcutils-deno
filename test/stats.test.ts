@@ -1,7 +1,7 @@
 import {
     assertEquals, assertNotEquals, mcTest, postTestResult,
 } from "../test_deps.ts";
-import { max, mean, median, min, minMax, standardDeviation } from "../src/index.ts";
+import { max, mean, median, min, minMax, sampleStandardDeviation } from "../src/index.ts";
 import {
     arrayOfNumber, maxResult, meanResult, medianResult, minMaxResult, minResult, stdDeviationResult,
     stdDeviationResultEst,
@@ -64,7 +64,7 @@ import {
     await mcTest({
         name    : "Successfully returns standard-deviation, rounded to 16 decimal places, result",
         testFunc: () => {
-            const result = standardDeviation(arrayOfNumber);
+            const result = sampleStandardDeviation(arrayOfNumber);
             console.log("standardDeviation-Res: ", result);
             assertEquals(result, stdDeviationResult, `Expected outcome: ${stdDeviationResult}`);
             assertNotEquals(result, 1, `Expected outcome: ${stdDeviationResult}`);
@@ -74,7 +74,7 @@ import {
     await mcTest({
         name    : "Successfully returns standard-deviation, rounded to 5 decimal places, result",
         testFunc: () => {
-            const result = standardDeviation(arrayOfNumber);
+            const result = sampleStandardDeviation(arrayOfNumber);
             const resultEst = Number(result.toFixed(5));
             console.log("standardDeviation-Res: ", resultEst);
             assertEquals(resultEst, stdDeviationResultEst, `Expected outcome: ${stdDeviationResultEst}`);

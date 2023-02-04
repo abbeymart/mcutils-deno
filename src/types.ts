@@ -111,9 +111,9 @@ export interface GenericArrayType<T> {
 }
 
 export interface FrequencyValue {
-    label: string;
+    label?: string;
     frequency: number;
-    value: number;
+    value?: number;
 }
 
 export interface FrequencyResult {
@@ -137,19 +137,19 @@ export interface StatFrequencyResult {
 
 
 export interface QuartilesType {
-    min: number; // Lowest value
-    q1: number;
-    q2: number;   // Median
-    q3: number;
-    q4: number; // Highest value, Max
+    minimum: number; // Lowest value
+    Q1: number;
+    Q2: number;   // Median
+    Q3: number;
+    Q4: number; // Highest value, Max
     IQR: number;
-    max: number;   // Highest value, Q4
+    maximum: number;   // Highest value, Q4
     range: number; // Q3 - Q1
 }
 
 // counters
 
-export interface CounterValue<T extends number>  {
+export interface CounterValue<T extends ValueType>  {
     count: number;
     value: T;
 }
@@ -182,4 +182,6 @@ export interface CounterResult<T extends ValueType> {
     [key: string]: CounterValue<T>;
 }
 
-export interface  ObjectCounterResult[T map[string]interface{} | struct{}] map[string]CounterObjectValue[T]
+export interface  ObjectCounterResult<T extends ObjectType> {
+    [key: string]: CounterObjectValue<T>;
+}

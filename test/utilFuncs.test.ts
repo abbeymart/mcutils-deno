@@ -10,7 +10,7 @@ import {
     underscoreValue
 } from "./data/utilFuncs.ts";
 import {
-    camelCaseToUnderscore, pascalCase, camelCase, getFullName, getNames, isEmptyObject, shortString,
+    camelCaseToUnderscore, separatorFieldToPascalCase, separatorFieldToCamelCase, getFullName, getNames, isEmptyObject, shortString,
     getParamsMessage, stringToBool,
 } from "../src/index.ts";
 
@@ -30,7 +30,7 @@ import {
     await mcTest({
         name    : "Transform underscore field to camelCase",
         testFunc: () => {
-            const result = camelCase(underscoreValue);
+            const result = separatorFieldToCamelCase(underscoreValue);
             console.log("camelCase-Res: ", result);
             assertEquals(result.code, "success", `Expected outcome: success`);
             assertEquals(result.value as string, camelCaseValue, `Expected outcome: ${camelCaseValue}`);
@@ -41,7 +41,7 @@ import {
     await mcTest({
         name    : "Transform underscore field to camelCase - invalid separator[/]",
         testFunc: () => {
-            const result = camelCase(underscoreValue, "/");
+            const result = separatorFieldToCamelCase(underscoreValue, "/");
             console.log("camelCase-Res: ", result);
             assertEquals(result.code, "separatorError", `Expected outcome: separatorError`);
             assertNotEquals(result.value as string, camelCaseValue, `Expected outcome: ${camelCaseValue}`);
@@ -51,7 +51,7 @@ import {
     await mcTest({
         name    : "Transform underscore field to camelCase, dot separator",
         testFunc: () => {
-            const result = camelCase(dotSepParam, ".");
+            const result = separatorFieldToCamelCase(dotSepParam, ".");
             console.log("camelCase-Res: ", result);
             assertEquals(result.code, "success", `Expected outcome: success`);
             assertEquals(result.value as string, camelCaseValue, `Expected outcome: ${camelCaseValue}`);
@@ -62,7 +62,7 @@ import {
     await mcTest({
         name    : "Transform underscore field to camelCase, pipe separator",
         testFunc: () => {
-            const result = camelCase(pipeSepParam, "|");
+            const result = separatorFieldToCamelCase(pipeSepParam, "|");
             console.log("camelCase-Res: ", result);
             assertEquals(result.code, "success", `Expected outcome: success`);
             assertEquals(result.value as string, camelCaseValue, `Expected outcome: ${camelCaseValue}`);
@@ -73,7 +73,7 @@ import {
     await mcTest({
         name    : "Transform underscore field to camelCase, space separator",
         testFunc: () => {
-            const result = camelCase(spaceSepParam, " ");
+            const result = separatorFieldToCamelCase(spaceSepParam, " ");
             console.log("camelCase-Res: ", result);
             assertEquals(result.code, "success", `Expected outcome: success`);
             assertEquals(result.value as string, camelCaseValue, `Expected outcome: ${camelCaseValue}`);
@@ -84,7 +84,7 @@ import {
     await mcTest({
         name    : "Transform underscore field to PascalCase",
         testFunc: () => {
-            const result = pascalCase(underscoreValue);
+            const result = separatorFieldToPascalCase(underscoreValue);
             console.log("PascalCase-Res: ", result);
             assertEquals(result.code, "success", `Expected outcome: success`);
             assertEquals(result.value as string, pascalCaseValue, `Expected outcome: ${pascalCaseValue}`);
@@ -95,7 +95,7 @@ import {
     await mcTest({
         name    : "Transform underscore field to PascalCase - invalid separator[/]",
         testFunc: () => {
-            const result = pascalCase(underscoreValue, "/");
+            const result = separatorFieldToPascalCase(underscoreValue, "/");
             console.log("PascalCase-Res: ", result);
             assertEquals(result.code, "separatorError", `Expected outcome: separatorError`);
             assertNotEquals(result.value as string, pascalCaseValue, `Expected outcome: ${pascalCaseValue}`);
@@ -105,7 +105,7 @@ import {
     await mcTest({
         name    : "Transform underscore field to PascalCase, dot separator",
         testFunc: () => {
-            const result = pascalCase(dotSepParam, ".");
+            const result = separatorFieldToPascalCase(dotSepParam, ".");
             console.log("PascalCase-Res: ", result);
             assertEquals(result.code, "success", `Expected outcome: success`);
             assertEquals(result.value as string, pascalCaseValue, `Expected outcome: ${pascalCaseValue}`);
@@ -116,7 +116,7 @@ import {
     await mcTest({
         name    : "Transform underscore field to PascalCase, pipe separator",
         testFunc: () => {
-            const result = pascalCase(pipeSepParam, "|");
+            const result = separatorFieldToPascalCase(pipeSepParam, "|");
             console.log("PascalCase-Res: ", result);
             assertEquals(result.code, "success", `Expected outcome: success`);
             assertEquals(result.value as string, pascalCaseValue, `Expected outcome: ${pascalCaseValue}`);
@@ -127,7 +127,7 @@ import {
     await mcTest({
         name    : "Transform underscore field to PascalCase, space separator",
         testFunc: () => {
-            const result = pascalCase(spaceSepParam, " ");
+            const result = separatorFieldToPascalCase(spaceSepParam, " ");
             console.log("PascalCase-Res: ", result);
             assertEquals(result.code, "success", `Expected outcome: success`);
             assertEquals(result.value as string, pascalCaseValue, `Expected outcome: ${pascalCaseValue}`);

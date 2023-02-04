@@ -1,5 +1,7 @@
 import {
-    ComputationResponse, Locale, LocaleOptions, MessageObject, ObjectType, PERMITTED_SEPARATORS
+    ArrayValue,
+    ComputationResponse, CounterResult, Locale, LocaleOptions, MessageObject, ObjectType, PERMITTED_SEPARATORS,
+    ValueType
 } from "./types.ts";
 import { getResMessage, ResponseMessage } from "../deps.ts";
 
@@ -16,6 +18,28 @@ export interface GetNames {
     lastname?: string;
 }
 
+// Counter method returns the unique counts of the specified array/slice values[object, int, float, string and bool]
+export const counter = <T extends ValueType>(val: ArrayValue<T>): CounterResult<T> => {
+    const count: CounterResult<T> = {}
+    for (const it of val) {
+        // stringify it=>key
+        const itStr = JSON.stringify(it)
+        const countVal = count[itStr] || {}
+        if (countVal && countVal.count > 0) {
+            count[itStr] = {
+                count: countVal.count + 1,
+                value: it,
+            }
+        } else {
+            count[itStr] = {
+                count: 1,
+                value: it,
+            }
+        }
+    }
+    return count
+}
+
 // getNames computes/returns firstname, middlename and lastname based on fullName components ([0],[1],[2]).
 export const getNames = (fullName: string): GetNames => {
     const names = fullName.split(" ");
@@ -28,8 +52,8 @@ export const getNames = (fullName: string): GetNames => {
         };
     } else {
         return {
-            firstname : names[0],
-            lastname  : names[1],
+            firstname: names[0],
+            lastname : names[1],
         };
     }
 };
@@ -39,9 +63,31 @@ export function camelCaseToUnderscore(key: string): string {
     return key.replace(/([A-Z])/g, "_$1").toLowerCase();
 }
 
-// camelCase computes and returns the camelCase field name from a sep (default to _) fieldName.
-export const camelCase = (text: string, sep = "_"): ComputationResponse => {
-    // accepts word/text and separator(" ", "_", "__", ".")
+// caseFieldToUnderscore transforms camelCase or PascalCase name to underscore name, in lowercase
+export const caseFieldToUnderscore = (caseString: string): string => {
+    // Create slice of words from the cased-Value, separate at Uppercase-character
+    // Looks for sequences of an uppercase letter(non-consecutive) followed by one or more lowercase letters.
+    const re = /^([A-Z][a-z]+)$/g
+    // transform first character to Uppercase
+    const caseValue = (caseString[0]).toUpperCase() + caseString.slice(1,)
+    // compose separate/matched words as slice
+    const textArray = caseValue.match(re) || []
+    const wordsArray: Array<string> = []
+    for (const txt of textArray) {
+        wordsArray.push(txt.toLowerCase())
+    }
+    if (wordsArray.length < 1) {
+        return ""
+    }
+    if (wordsArray.length === 1) {
+        return wordsArray[0]
+    }
+    return wordsArray.join("_")
+}
+
+// separatorFieldToCamelCase computes and returns the camelCase field name from a sep (default to _) fieldName.
+export const separatorFieldToCamelCase = (text: string, sep = "_"): ComputationResponse => {
+    // accepts word/text and separator[" ", "_", "__", ".", "|", "-"]
     const permittedSeparators = PERMITTED_SEPARATORS || [" ", "_", "__", ".", "|", "-"];
     if (!permittedSeparators.includes(sep)) {
         return {
@@ -54,21 +100,18 @@ export const camelCase = (text: string, sep = "_"): ComputationResponse => {
     // convert the first word to lowercase
     const firstWord = textArray[0].toLowerCase();
     // convert other words: first letter to upper case and other letters to lowercase
-    const otherWords = textArray.slice(1).map((item) => {
-        // convert first letter to upper case
-        const item0 = item[0].toUpperCase();
-        // convert other letters to lowercase
-        const item1N = item.slice(1).toLowerCase();
-        return `${item0}${item1N}`;
-    });
+    let otherWords = "";
+    for (const word of textArray.slice(1,)) {
+        otherWords += `${(word[0]).toUpperCase()}${word.slice(1,).toLowerCase()}`
+    }
     return {
         code : "success",
-        value: `${firstWord}${otherWords.join("")}`,
+        value: `${firstWord}${otherWords}`,
     };
 };
 
-// pascalCase computes and returns the PascalCase field name from a sep (default to _) fieldName.
-export const pascalCase = (text: string, sep = "_"): ComputationResponse => {
+// separatorFieldToPascalCase computes and returns the PascalCase field name from a sep (default to _) fieldName.
+export const separatorFieldToPascalCase = (text: string, sep = "_"): ComputationResponse => {
     // accepts word/text and separator(" ", "_", "__", ".", "|")
     const permittedSeparators = PERMITTED_SEPARATORS || [" ", "_", "__", ".", "|", "-"];
     if (!permittedSeparators.includes(sep)) {
@@ -82,11 +125,8 @@ export const pascalCase = (text: string, sep = "_"): ComputationResponse => {
     // convert all words: first letter to upper case and other letters to lowercase
     let allWords = "";
     for (const word of textArray) {
-        const firstLetterUpper = (word[0]).toUpperCase();
-        const remainLetterLower = word.slice(1,).toLowerCase();
-        allWords += firstLetterUpper + remainLetterLower
+        allWords += `${(word[0]).toUpperCase()}${word.slice(1,).toLowerCase()}`
     }
-
     return {
         code   : "success",
         message: "success",
