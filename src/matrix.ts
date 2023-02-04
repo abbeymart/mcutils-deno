@@ -247,7 +247,10 @@ export const addScalarMatrix = (matrix: Array<Array<number>>, scalar: number): M
 /**
  * subtractScalarMatrix function subtracts a scalar Value from the matrix/matrices.
  */
-export const subtractScalarMatrix = (matrix: Array<Array<number>>, scalar: number): MatrixResult => {
+export const subtractScalarMatrix = (matrix: Array<Array<number>>, scalar: number, precision: number): MatrixResult => {
+    if (precision < 0) {
+        precision = 0 /// default
+    }
     // initialize the matrix result
     const result: Array<Array<number>> = []
     // validate matrices length
@@ -275,7 +278,7 @@ export const subtractScalarMatrix = (matrix: Array<Array<number>>, scalar: numbe
         let subItemIndex = 0
         while (subItemIndex < subItemLength) {
             // perform addition
-            matAddResult.push(mat[subItemIndex] - scalar)
+            matAddResult.push(Number((mat[subItemIndex] + scalar).toFixed(precision)))
             // increment subItemIndex
             subItemIndex += 1
         }
@@ -294,7 +297,10 @@ export const subtractScalarMatrix = (matrix: Array<Array<number>>, scalar: numbe
 /**
  * multiplyScalarMatrix function multiply a scalar Value with the matrix/matrices.
  */
-export const multiplyScalarMatrix = (matrix: Array<Array<number>>, scalar: number): MatrixResult => {
+export const multiplyScalarMatrix = (matrix: Array<Array<number>>, scalar: number, precision: number): MatrixResult => {
+    if (precision < 0) {
+        precision = 0 /// default
+    }
     // initialize the matrix result
     const result: Array<Array<number>> = []
     // validate matrices length
@@ -322,7 +328,7 @@ export const multiplyScalarMatrix = (matrix: Array<Array<number>>, scalar: numbe
         let subItemIndex = 0
         while (subItemIndex < subItemLength) {
             // perform addition
-            matAddResult.push(mat[subItemIndex] * scalar)
+            matAddResult.push(Number((mat[subItemIndex] * scalar).toFixed(precision)))
             // increment subItemIndex
             subItemIndex += 1
         }
@@ -341,7 +347,10 @@ export const multiplyScalarMatrix = (matrix: Array<Array<number>>, scalar: numbe
 /**
  * divideScalarMatrix function the matrix/matrices by the scalar Value.
  */
-export const divideScalarMatrix = (matrix: Array<Array<number>>, scalar: number): MatrixResult => {
+export const divideScalarMatrix = (matrix: Array<Array<number>>, scalar: number, precision: number): MatrixResult => {
+    if (precision < 0) {
+        precision = 0 /// default
+    }
     // initialize the matrix result
     const result: Array<Array<number>> = []
     // validate matrices length
@@ -369,7 +378,7 @@ export const divideScalarMatrix = (matrix: Array<Array<number>>, scalar: number)
         let subItemIndex = 0
         while (subItemIndex < subItemLength) {
             // perform addition
-            matAddResult.push(mat[subItemIndex] / scalar)
+            matAddResult.push(Number((mat[subItemIndex] / scalar).toFixed(precision)))
             // increment subItemIndex
             subItemIndex += 1
         }
@@ -431,7 +440,10 @@ export const transposeMatrix = (matrix: Array<Array<number>>): MatrixResult => {
  * multiplyMatrix function multiply two matrices.
  * The matrix1 single slice length must be the same as the number of columns in matrix2/sub-matrices.
  */
-export const multiplyMatrix = (matrix1: Array<number>, matrix2: Array<Array<number>>): MatrixResult => {
+export const multiplyMatrix = (matrix1: Array<number>, matrix2: Array<Array<number>>, precision: number): MatrixResult => {
+    if (precision < 0) {
+        precision = 0 /// default
+    }
     // initialize the matrix result
     const result: Array<number> = []
     // validate matrix2 values' lengths must match the length of matrix1[0]
@@ -462,7 +474,7 @@ export const multiplyMatrix = (matrix1: Array<number>, matrix2: Array<Array<numb
         const mat2ColSlice = matrix2[mat1ColCount]
         const matMultiSlice: Array<number> = []
         for (const mat2ColVal of mat2ColSlice){
-            matMultiSlice.push (mat2ColVal * mat1ColVal)
+            matMultiSlice.push (Number((mat2ColVal * mat1ColVal).toFixed(precision)))
         }
         // update mat-multiplication-slice
         matMultiSlices.push(matMultiSlice)
@@ -492,7 +504,10 @@ export const multiplyMatrix = (matrix1: Array<number>, matrix2: Array<Array<numb
  * multiplyMatrices function multiply two matrices.
  * The number of rows in matrix1 sub-matrices must be the same as the number of columns in matrix2.
  */
-export const multiplyMatrices = (matrix1: Array<Array<number>>, matrix2: Array<Array<number>>): MatrixResult => {
+export const multiplyMatrices = (matrix1: Array<Array<number>>, matrix2: Array<Array<number>>, precision: number): MatrixResult => {
+    if (precision < 0) {
+        precision = 0 /// default
+    }
     // initialize the matrix result
     let result: Array<Array<number>> = []
     // validate matrix1 sub-items and matrix2 length, rows/columns matching
@@ -528,7 +543,7 @@ export const multiplyMatrices = (matrix1: Array<Array<number>>, matrix2: Array<A
         let matrix1SliceIndex = 0
         while (matrix1SliceIndex < matrix1SlicesLength) {
             // compute the matrix multiplication for each of the matrix1 slices and matrix2 slices
-            const matMulRes = multiplyMatrix(matrix1[matrix1SliceIndex], matrix2)
+            const matMulRes = multiplyMatrix(matrix1[matrix1SliceIndex], matrix2, precision)
             if (matMulRes.code != "success"){
                 result = []
                 matMulRes.result = []

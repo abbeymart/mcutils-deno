@@ -1,4 +1,3 @@
-// TODO: include number-format-t-N-decimal-places: Number(result.toFixed(N))
 import utils from "./utils.ts";
 
 export * from "./types.ts";
