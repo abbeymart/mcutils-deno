@@ -12,12 +12,12 @@ import {
     await mcTest({
         name    : "Successfully returns locale labels object / record",
         testFunc: () => {
-            const localeRes = getLocale(localeLabelFiles, localeLabelOptions) as Locale;
+            const localeRes = getLocale(localeLabelFiles, localeLabelOptions);
             console.log("locale-labels-Res: ", localeRes);
-            assertEquals(localeRes["code"] as ValueType, localeLabelObject.code as ValueType, `Expected outcome: ${localeLabelObject.code}`);
-            assertEquals(localeRes["name"] as ValueType, localeLabelObject.name as ValueType, `Expected outcome: ${localeLabelObject.name}`);
-            assertNotEquals(localeRes["code"] as ValueType, "name", `Expected outcome: ${localeLabelObject.code}`);
-            assertNotEquals(localeRes["name"] as ValueType, "code", `Expected outcome: ${localeLabelObject.name}`);
+            assertEquals(localeRes["code"] as string, localeLabelObject.code as string, `Expected outcome: ${localeLabelObject.code as string}`);
+            assertEquals(localeRes["name"] as string, localeLabelObject.name as string, `Expected outcome: ${localeLabelObject.name as string}`);
+            assertNotEquals(localeRes["code"] as string, "name", `Expected outcome: ${localeLabelObject.code as string}`);
+            assertNotEquals(localeRes["name"] as string, "code", `Expected outcome: ${localeLabelObject.name as string}`);
             assertStrictEquals(localeRes as ValueType, (localeLabelObject), `Expected outcome: ${(localeLabelObject)}`);
             assertNotStrictEquals(localeRes as ValueType, localeLabelObject.name as ValueType, `Expected outcome: ${(localeLabelObject)}`);
         },
@@ -27,10 +27,10 @@ import {
         testFunc: () => {
             const localeRes = getLocale(localeConstantFiles, localeConstantOptions) as Locale;
             console.log("locale-constants-Res: ", localeRes);
-            assertEquals((localeRes["getShortDesc"] as LocaleFunc)(), localeConstantObject["SHORT_DESC"] as ValueType, `Expected outcome: ${localeConstantObject["SHORT_DESC"]}`);
-            assertEquals((localeRes.getDefaultLanguage as LocaleFunc)(), localeConstantObject["DEFAULT_LANG"] as ValueType, `Expected outcome: ${localeConstantObject["DEFAULT_LANG"]}`);
-            assertNotEquals((localeRes.getShortDesc as LocaleFunc)(), 100, `Expected outcome: ${localeConstantObject["SHORT_DESC"]}`);
-            assertNotEquals((localeRes.getDefaultLanguage as LocaleFunc)(), "fr-CA", `Expected outcome: ${localeConstantObject["DEFAULT_LANG"]}`);
+            assertEquals((localeRes["getShortDesc"] as LocaleFunc)(), localeConstantObject["SHORT_DESC"] as ValueType, `Expected outcome: ${localeConstantObject["SHORT_DESC"] as string}`);
+            assertEquals((localeRes.getDefaultLanguage as LocaleFunc)(), localeConstantObject["DEFAULT_LANG"] as ValueType, `Expected outcome: ${localeConstantObject["DEFAULT_LANG"] as string}`);
+            assertNotEquals((localeRes.getShortDesc as LocaleFunc)(), 100, `Expected outcome: ${localeConstantObject["SHORT_DESC"] as string}`);
+            assertNotEquals((localeRes.getDefaultLanguage as LocaleFunc)(), "fr-CA", `Expected outcome: ${localeConstantObject["DEFAULT_LANG"] as string}`);
         },
     });
 
