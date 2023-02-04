@@ -45,5 +45,5 @@ jobs:
         run: deno run test/validate.test.ts
       - name: Run tests - utilFuncs
         run: deno run test/utilFuncs.test.ts
-      - name: Run tests - utils (pending)
+      - name: Run tests - utils (pending - optional)
         run: deno run test/utils.test.ts
