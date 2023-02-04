@@ -55,39 +55,37 @@ export const addMatrices = (matrix1: Array<Array<number>>, matrix2: Array<Array<
  */
 export const addMultipleMatrices = (matrices: Array<Array<Array<number>>>): MatrixResult => {
     // initialize the matrix result
-    const result: Array<Array<number>> = []
+    let result: Array<Array<number>> = []
     const matricesLength = matrices.length
-    if matricesLength <= 1 {
-        return errors.New(fmt.Sprintf("length of matrices should be greater than 1"))
+    if (matricesLength <= 1) {
+        return {
+            code   : "paramsError",
+            message: "length of matrices should be greater than 1",
+            result : [],
+        }
     }
     // perform addition of the first two matrices
-    err := AddMatrices(matrices[0], matrices[1], result)
-    if err != nil {
-        result = [][]
-        T
-        {
-        }
-        return err
+    const addMatRes = addMatrices(matrices[0], matrices[1])
+    if (addMatRes.code !== "success") {
+        result = []
+        return addMatRes
     }
     // perform the remaining addition of the 3rd to the last matrix
-    matIndex := 2
-    for matIndex < matricesLength {
-        var nextResult
-        [][]
-        T
-        err = AddMatrices(result, matrices[matIndex], nextResult)
-        if err != nil {
-            result = [][]
-            T
-            {
-            }
-            return err
+    let matIndex = 2
+    while (matIndex < matricesLength) {
+        // next matrix addition
+        const addMatRes = addMatrices(result, matrices[matIndex])
+        if (addMatRes.code !== "success") {
+            result = []
+            return addMatRes
         }
-        result = nextResult
+        result = addMatRes.result
         matIndex += 1
     }
     return {
-
+        code   : "success",
+        message: "success",
+        result : result,
     }
 }
 
