@@ -1,0 +1,412 @@
+
+
+// AddMatrices function adds two matrices of the same dimensions.
+export const AddMatrices = (matrix1: Array<Array<number>>, matrix2: Array<Array<number>>): Array<Array<number>> => {
+    // initialize the matrix result
+    const result: Array<Array<number>> = []
+    // validate matrix1 and matrix2 length
+    if len(matrix1) != len(matrix2) {
+        return errors.New(fmt.Sprintf("length of both matrices should be equal [matrix1: %v | matrix2: %v]", len(matrix1), len(matrix2)))
+    }
+    matrixLength := len(matrix1)
+    subItemLength := len(matrix1[0])
+    matrixIndex := 0
+    for matrixIndex < matrixLength {
+        mat1 := matrix1[matrixIndex]
+        mat2 := matrix2[matrixIndex]
+        // validate matrix1 and matrix2 sub-items length
+        if len(mat1) != subItemLength || len(mat2) != subItemLength {
+            result = [][]T{}
+            return errors.New(fmt.Sprintf("length of both sub-matrices should be equal [matrix1[%v]: %v | matrix2[%v]: %v]", matrix1[matrixIndex], len(matrix1), matrix2[matrixIndex], len(matrix2)))
+        }
+        // compute matrix additions
+        var matAddResult []T
+        subItemIndex := 0
+        for subItemIndex < subItemLength {
+            // perform addition
+            matAddResult = append(matAddResult, mat1[subItemIndex]+mat2[subItemIndex])
+            // increment subItemIndex
+            subItemIndex += 1
+        }
+        // update result
+        result = append(result, matAddResult)
+        // increment matrixIndex
+        matrixIndex += 1
+    }
+    return nil
+}
+
+// AddMultipleMatrices function [tensor] adds multiple matrices of the same dimensions.
+export const AddMultipleMatrices = (matrices: Array<Array<Array<number>>>): Array<Array<number>> => {
+    // initialize the matrix result
+    const result: Array<Array<number>> = []
+    matricesLength := len(matrices)
+    if matricesLength <= 1 {
+        return errors.New(fmt.Sprintf("length of matrices should be greater than 1"))
+    }
+    // perform addition of the first two matrices
+    err := AddMatrices(matrices[0], matrices[1], result)
+    if err != nil {
+        result = [][]T{}
+        return err
+    }
+    // perform the remaining addition of the 3rd to the last matrix
+    matIndex := 2
+    for matIndex < matricesLength {
+        var nextResult [][]T
+        err = AddMatrices(result, matrices[matIndex], nextResult)
+        if err != nil {
+            result = [][]T{}
+            return err
+        }
+        result = nextResult
+        matIndex += 1
+    }
+    return nil
+}
+
+// SubtractMatrices function subtract two matrices of the same dimensions.
+export const SubtractMatrices = (matrix1: Array<Array<number>>, matrix2: Array<Array<number>>): Array<Array<number>> => {
+    // initialize the matrix result
+    const result: Array<Array<number>> = []
+    // validate matrix1 and matrix2 length
+    if len(matrix1) != len(matrix2) {
+        return errors.New(fmt.Sprintf("length of both matrices should be equal [matrix1: %v | matrix2: %v]", len(matrix1), len(matrix2)))
+    }
+    matrixLength := len(matrix1)
+    subItemLength := len(matrix1[0])
+    matrixIndex := 0
+    for matrixIndex < matrixLength {
+        // validate matrix1 and matrix2 sub-items length
+        mat1 := matrix1[matrixIndex]
+        mat2 := matrix2[matrixIndex]
+        // validate matrix1 and matrix2 sub-items length
+        if len(mat1) != subItemLength || len(mat2) != subItemLength {
+            result = [][]T{}
+            return errors.New(fmt.Sprintf("length of both sub-matrices should be equal [matrix1[%v]: %v | matrix2[%v]: %v]", matrix1[matrixIndex], len(matrix1), matrix2[matrixIndex], len(matrix2)))
+        }
+        // compute matrix subtractions
+        var matAddResult []T
+        subItemIndex := 0
+        for subItemIndex < subItemLength {
+            // perform subtraction
+            matAddResult = append(matAddResult, mat1[subItemIndex]-mat2[subItemIndex])
+            // increment subItemIndex
+            subItemIndex += 1
+        }
+        // update result
+        result = append(result, matAddResult)
+        // increment matrixIndex
+        matrixIndex += 1
+    }
+    return nil
+}
+
+// SubtractMultipleMatrices function [tensor] subtract multiple matrices of the same dimensions.
+export const SubtractMultipleMatrices = (matrices: Array<Array<Array<number>>>): Array<Array<number>> => {
+    // initialize the matrix result
+    const result: Array<Array<number>> = []
+    matricesLength := len(matrices)
+    if matricesLength <= 1 {
+        return errors.New(fmt.Sprintf("length of matrices should be greater than 1"))
+    }
+    // perform subtraction of the first two matrices
+    err := SubtractMatrices(matrices[0], matrices[1], result)
+    if err != nil {
+        result = [][]T{}
+        return err
+    }
+    // perform the remaining subtraction of the 3rd to the last matrix
+    matIndex := 2
+    for matIndex < matricesLength {
+        var nextResult [][]T
+        err = SubtractMatrices(result, matrices[matIndex], nextResult)
+        if err != nil {
+            result = [][]T{}
+            return err
+        }
+        result = nextResult
+        matIndex += 1
+    }
+    return nil
+}
+
+// AddScalarMatrix function adds a scalar Value to the matrix/matrices.
+export const AddScalarMatrix = (matrix: Array<Array<number>>, scalar: number): Array<Array<number>> => {
+    // initialize the matrix result
+    const result: Array<Array<number>> = []
+    // validate matrix1 and matrix2 length
+    if len(matrix) < 1 {
+        return errors.New(fmt.Sprintf("length of the matrix should greater than 0"))
+    }
+    matrixLength := len(matrix)
+    subItemLength := len(matrix[0])
+    matrixIndex := 0
+    for matrixIndex < matrixLength {
+        mat := matrix[matrixIndex]
+        // compute matrix additions
+        var matAddResult []T
+        subItemIndex := 0
+        for subItemIndex < subItemLength {
+            // perform addition
+            matAddResult = append(matAddResult, mat[subItemIndex]+scalar)
+            // increment subItemIndex
+            subItemIndex += 1
+        }
+        // update result
+        result = append(result, matAddResult)
+        // increment matrixIndex
+        matrixIndex += 1
+    }
+    return nil
+}
+
+// SubtractScalarMatrix function subtracts a scalar Value from the matrix/matrices.
+export const SubtractScalarMatrix = (matrix: Array<Array<number>>, scalar: number): Array<Array<number>> => {
+    // initialize the matrix result
+    const result: Array<Array<number>> = []
+    // validate matrix1 and matrix2 length
+    if len(matrix) < 1 {
+        return errors.New(fmt.Sprintf("length of the matrix should greater than 0"))
+    }
+    matrixLength := len(matrix)
+    subItemLength := len(matrix[0])
+    matrixIndex := 0
+    for matrixIndex < matrixLength {
+        mat := matrix[matrixIndex]
+        // compute matrix additions
+        var matAddResult []T
+        subItemIndex := 0
+        for subItemIndex < subItemLength {
+            // perform addition
+            matAddResult = append(matAddResult, mat[subItemIndex]-scalar)
+            // increment subItemIndex
+            subItemIndex += 1
+        }
+        // update result
+        result = append(result, matAddResult)
+        // increment matrixIndex
+        matrixIndex += 1
+    }
+    return nil
+}
+
+// MultiplyScalarMatrix function multiply a scalar Value with the matrix/matrices.
+export const MultiplyScalarMatrix = (matrix: Array<Array<number>>, scalar: number): Array<Array<number>> => {
+    // initialize the matrix result
+    const result: Array<Array<number>> = []
+    // validate matrix1 and matrix2 length
+    if len(matrix) < 1 {
+        return errors.New(fmt.Sprintf("length of the matrix should greater than 0"))
+    }
+    matrixLength := len(matrix)
+    subItemLength := len(matrix[0])
+    matrixIndex := 0
+    for matrixIndex < matrixLength {
+        mat := matrix[matrixIndex]
+        // compute matrix additions
+        var matAddResult []T
+        subItemIndex := 0
+        for subItemIndex < subItemLength {
+            // perform addition
+            matAddResult = append(matAddResult, mat[subItemIndex]*scalar)
+            // increment subItemIndex
+            subItemIndex += 1
+        }
+        // update result
+        result = append(result, matAddResult)
+        // increment matrixIndex
+        matrixIndex += 1
+    }
+    return nil
+}
+
+// DivideScalarMatrix function the matrix/matrices by the scalar Value.
+export const DivideScalarMatrix = (matrix: Array<Array<number>>, scalar: number): Array<Array<number>> => {
+    // initialize the matrix result
+    const result: Array<Array<number>> = []
+    // validate matrix1 and matrix2 length
+    if len(matrix) < 1 {
+        return errors.New(fmt.Sprintf("length of the matrix should greater than 0"))
+    }
+    matrixLength := len(matrix)
+    subItemLength := len(matrix[0])
+    matrixIndex := 0
+    for matrixIndex < matrixLength {
+        mat := matrix[matrixIndex]
+        // compute matrix additions
+        var matAddResult []T
+        subItemIndex := 0
+        for subItemIndex < subItemLength {
+            // perform addition
+            matAddResult = append(matAddResult, mat[subItemIndex]/scalar)
+            // increment subItemIndex
+            subItemIndex += 1
+        }
+        // update result
+        result = append(result, matAddResult)
+        // increment matrixIndex
+        matrixIndex += 1
+    }
+    return nil
+}
+
+// TransposeMatrix function transpose the matrix - swap rows and columns, i.e. rotate the matrix around it's diagonal.
+export const TransposeMatrix = (matrix: Array<Array<number>>): Array<Array<number>> => {
+    // initialize the matrix result
+    const result: Array<Array<number>> = []
+    // validate matrix length
+    if len(matrix) < 1 {
+        return errors.New(fmt.Sprintf("length of the matrix should greater than 0"))
+    }
+    for _, matSlice := range matrix {
+        if len(matrix[0]) != len(matSlice) {
+            return errors.New(fmt.Sprintf("Length of matrix2 sub-items must be equal [Expected: %v, Got: %v]", len(matrix[0]), len(matSlice)))
+        }
+    }
+    // transpose matrix, swap columns to rows, diagonally
+    matColumnItemsCount := len(matrix[0])
+    matColumnItemIndex := 0
+    for matColumnItemIndex < matColumnItemsCount {
+        var transposeSliceRow []T
+        for _, matColumnSlice := range matrix {
+            transposeSliceRow = append(transposeSliceRow, matColumnSlice[matColumnItemIndex])
+        }
+        result = append(result, transposeSliceRow)
+        matColumnItemIndex += 1
+    }
+    return nil
+}
+
+// MultiplyMatrix function multiply two matrices.
+// The matrix1 single slice length must be the same as the number of columns in matrix2/sub-matrices.
+export const MultiplyMatrix = (matrix1: Array<number>, matrix2: Array<Array<number>>): Array<number> => {
+    // initialize the matrix result
+    const result: Array<number> = []
+    // validate matrix2 values' lengths must match the length of matrix1[0]
+    if len(matrix1) != len(matrix2) {
+        return errors.New(fmt.Sprintf("Length of matrix1 [Expected: %v] must match the number of columns of matrix2 [Got: %v]", len(matrix1), len(matrix2)))
+    }
+    for _, mat2Slice := range matrix2 {
+        if len(matrix2[0]) != len(mat2Slice) {
+            return errors.New(fmt.Sprintf("Length of matrix2 sub-items must be equal [Expected: %v, Got: %v]", len(matrix2[0]), len(mat2Slice)))
+        }
+    }
+    // compute the matrices multiplication
+    mat1Slice := matrix1
+    mat1Columns := len(mat1Slice) // ==> matrix2 sub-items length/columns
+    mat1ColCount := 0
+    var matMultiSlices [][]T // Required to compute the summation of the row-column multiplications
+    for mat1ColCount < mat1Columns {
+        // compose multiplication Slice, by matching matrix1/matrix2-columns
+        mat1ColVal := mat1Slice[mat1ColCount]
+        mat2ColSlice := matrix2[mat1ColCount]
+        var matMultiSlice []T
+        for _, mat2ColVal := range mat2ColSlice {
+            matMultiSlice = append(matMultiSlice, mat2ColVal*mat1ColVal)
+        }
+        // update mat-multiplication-slice
+        matMultiSlices = append(matMultiSlices, matMultiSlice)
+        // next column
+        mat1ColCount += 1
+    }
+    // compute the sum of multiplication-slices by matching columns/rows
+    //var sumMultiplication []T
+    matMultiRows := len(matMultiSlices[0])
+    matMultiRow := 0
+    for matMultiRow < matMultiRows {
+        matMultiSum := T(0)
+        for _, val := range matMultiSlices {
+            matMultiSum += val[matMultiRow]
+        }
+        result = append(result, matMultiSum)
+        // next row
+        matMultiRow += 1
+    }
+    return nil
+}
+
+// MultiplyMatrices function multiply two matrices.
+// The number of rows in matrix1 sub-matrices must be the same as the number of columns in matrix2.
+export const MultiplyMatrices = (matrix1: Array<Array<number>>, matrix2: Array<Array<number>>): Array<Array<number>> => {
+    // initialize the matrix result
+    const result: Array<Array<number>>= []
+    // validate matrix1 sub-items and matrix2 length, rows/columns matching
+    for _, matrix1Val := range matrix1 {
+        if len(matrix1[0]) != len(matrix1Val) {
+            return errors.New(fmt.Sprintf("Length of matrix1 sub-items must be the same [Expected: %v, Got: %v]", len(matrix1[0]), len(matrix1Val)))
+        }
+        if len(matrix1Val) != len(matrix2) {
+            return errors.New(fmt.Sprintf("Length of matrix1 sub-items must match the matrix2 columns/length [Expected: %v, Got: %v]", len(matrix1Val), len(matrix2)))
+        }
+    }
+    // validate matrix2 sub-items lengths/rows
+    for _, mat2Slice := range matrix2 {
+        if len(matrix2[0]) != len(mat2Slice) {
+            return errors.New(fmt.Sprintf("Length of matrix2 sub-items must be equal [Expected: %v, Got: %v]", len(matrix2[0]), len(mat2Slice)))
+        }
+    }
+    // compute the matrices multiplication
+    matrix1SlicesLength := len(matrix1)
+    matrix1SliceIndex := 0
+    for matrix1SliceIndex < matrix1SlicesLength {
+        // compute the matrix multiplication for each of the matrix1 slices and matrix2 slices
+        var multiResult []T
+        err := MultiplyMatrix(matrix1[matrix1SliceIndex], matrix2, multiResult)
+        if err != nil {
+            result = [][]T{}
+            return err
+        }
+        result = append(result, multiResult)
+        matrix1SliceIndex += 1
+    }
+    return nil
+}
+
+// MultiplyMatrices2 - DEPRECATED | TODO: REMOVE POST-TESTING
+export const MultiplyMatrices2 = (matrix1: Array<Array<number>>, matrix2: Array<Array<number>>): Array<Array<number>> => {
+    // initialize the matrix result
+    const result: Array<Array<number>> = []
+    // validate matrix1 and matrix2 length
+    for _, matrix1Val := range matrix1 {
+        if len(matrix1[0]) != len(matrix1Val) {
+            return errors.New(fmt.Sprintf("Length of matrix1 sub-items must be the same [%v]", len(matrix1[0])))
+        }
+    }
+    // validate matrix2 values' lengths
+    for _, matrix2Val := range matrix2 {
+        if len(matrix1[0]) != len(matrix2Val) {
+            return errors.New(fmt.Sprintf("Length of matrix1 sub-items [%v] must be the same as the number of columns of matrix2 sub-items [%v]", len(matrix1[0]), len(matrix2Val)))
+        }
+    }
+    // compute the matrices multiplication
+    matrix1Length := len(matrix1)
+    matrix2Length := len(matrix2)
+    mat1Index := 0
+    mat2Index := 0
+    for mat1Index < matrix1Length {
+        mat1Val := matrix1[mat1Index]
+        matColumns := len(mat1Val)
+        matColumnIndex := 0
+        var matrixMulResult []T
+        for matColumnIndex < matColumns {
+            // TODO: compute sum of all the multiplications of the matrix2 items at column matColumnIndex
+            matColumnSum := T(0)
+            for mat2Index < matrix2Length {
+                //mat2Val := matrix2[mat2Index]
+                mat2ColumnIndex := 0
+                for mat2ColumnIndex < matColumns {
+                    matColumnSum += matrix2[mat2Index][matColumnIndex] * matrix1[mat1Index][mat2ColumnIndex]
+                    mat2ColumnIndex += 1
+                }
+                mat2Index += 1
+            }
+            matrixMulResult = append(matrixMulResult, matColumnSum)
+            matColumnIndex += 1
+        }
+        result = append(result, matrixMulResult)
+        mat1Index += 1
+    }
+
+    return nil
+}

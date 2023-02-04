@@ -1,6 +1,6 @@
 // mean returns the mean value from the array of numbers.
 import { FrequencyResult, FrequencyValue, QuartilesType, StatFrequencyResult, StatFrequencyValue } from "./types.ts";
-import { counterGeneric } from "./maths.ts";
+
 import { counter } from "./utilFuncs.ts";
 
 export const mean = (arr: Array<number>): number => {

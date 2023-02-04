@@ -212,7 +212,7 @@ export const set = <T extends SetValueType>(values: ArrayValue<T>): Array<T> => 
 }
 
 export const setOfString = (values: ArrayOfString): ArrayOfString => {
-    const setValue = [];
+    const setValue: ArrayOfString= [];
     for (const it of values) {
         const itExist = setValue.indexOf(it);
         if (itExist === -1) {
@@ -223,7 +223,7 @@ export const setOfString = (values: ArrayOfString): ArrayOfString => {
 }
 
 export const setOfNumber = (values: ArrayOfNumber): ArrayOfNumber => {
-    const setValue = [];
+    const setValue: ArrayOfNumber= [];
     for (const it of values) {
         const itExist = setValue.indexOf(it);
         if (itExist === -1) {
@@ -234,7 +234,7 @@ export const setOfNumber = (values: ArrayOfNumber): ArrayOfNumber => {
 }
 
 export const setOfSymbol = (values: ArrayOfSymbol): ArrayOfSymbol => {
-    const setValue = [];
+    const setValue: ArrayOfSymbol = [];
     for (const it of values) {
         const itExist = setValue.indexOf(it);
         if (itExist === -1) {
