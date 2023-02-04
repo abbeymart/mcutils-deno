@@ -1,7 +1,6 @@
 import utils from "./utils.ts";
 
 export * from "./types.ts";
-export * from "./getLocale.ts";
 export * from "./validate.ts";
 export * from "./localWebStorage.ts";
 export * from "./collection.ts";

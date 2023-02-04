@@ -390,6 +390,200 @@ export function strToBool(val: string | number = "n"): boolean {
     }
 }
 
+// Validation functions
+export function isProvided(param: string | number | ObjectType): boolean {
+    // Verify the Required status
+    // Validate that the item is not empty / null / undefined
+    return !(param === "" || param === null || param === undefined || typeof param === "object" && isEmptyObject(param));
+}
+
+export function isEven(num: number): boolean {
+    return Number.isFinite(num) && (num % 2 === 0);
+}
+
+export function isOdd(num: number): boolean {
+    return Number.isFinite(num) && (num % 2 !== 0);
+}
+
+export function isNumberDigit(num: number): boolean {
+    // Validate that param is a number (digit): 100 | 99 | 33 | 44 | 200
+    const numberPattern = /^\d+$/;
+    return numberPattern.test(num.toString());
+}
+
+export function isNumberFloat(num: number): boolean {
+    // Validate that param is a number (float): 0.90 | 99.9 | 33.3 | 44.40
+    const numberPattern = /^(\d)+([.])?(\d)*$/;
+    return numberPattern.test(num.toString());
+}
+
+export function isObjectType(param: ObjectType): boolean {
+    // Validate param is an object, {}
+    return (typeof param === "object" && !Array.isArray(param));
+}
+
+export function isArrayType(param: []): boolean {
+    // Validate param is an object, []
+    return Array.isArray(param);
+}
+
+export function isStringChar(param: string): boolean {
+    // Validate that param is a string (characters only) -- use regEx
+    const charRegEx = /^[a-zA-Z&$_-]+$/;
+    return charRegEx.test(param);
+}
+
+export function isStringAlpha(param: string): boolean {
+    // Validate that param is a string (alphanumeric, chars/numbers only)
+    const alphaNumericPattern = /^[a-zA-Z\d-_]+$/;
+    return alphaNumericPattern.test(param);
+}
+
+export function isUsername(param: string): boolean {
+    const usernamePattern = /^([a-zA-Z\d_])+$/; // alphanumeric, underscore, no space
+    return usernamePattern.test(param);
+}
+
+export function isNull(infoItem: null): boolean {
+    return infoItem === null;
+}
+
+export function isEmail(param: string): boolean {
+    const testPattern = /^[\da-zA-Z]+([\da-zA-Z]*[-._+])*[\da-zA-Z]+@[\da-zA-Z]+([-.][\da-zA-Z]+)*([\da-zA-Z]*[.])[a-zA-Z]{2,6}$/;
+    // const testPattern = /^[\da-zA-Z]+([\-._][\da-zA-Z]+)*@[\da-zA-Z]+([\-.][\da-zA-Z]+)*([.])[a-zA-Z]{2,6}$/;
+    return testPattern.test(param);
+}
+
+export function isPassword(param: string): boolean {
+    const testPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d.*)(?=.*\W.*)[a-zA-Z\d\S]{6,15}$/;
+    return testPattern.test(param);
+}
+
+export function isNumberOnRange(num: number, min: number, max: number): boolean {
+    if ((isNumberDigit(num) || isNumberFloat(num)) && (min < max)) {
+        return (num >= min && num <= max)
+    }
+    return false;
+}
+
+export function isPhone(param: string): boolean {
+    const phonePattern = /^([1-9]{1,3})?[-. ]?(\(\d{3}\)?[-. ]?|\d{3}?[-. ]?)?\d{3}?[-. ]?\d{4}$/;
+    return phonePattern.test(param);
+}
+
+export function isPostalCode(param: string): boolean {
+    const postCodePattern = /^[a-zA-Z\d]+(\s)?[a-zA-Z\d]*/;
+    return postCodePattern.test(param);
+}
+
+export function isPostalCodeUS(param: string): boolean {
+    const postCodePattern = /^[a-zA-Z\d]+(\s)?[a-zA-Z\d]*/;
+    return postCodePattern.test(param);
+}
+
+export function isPostalCodeCanada(param: string): boolean {
+    const postCodePattern = /^[a-zA-Z\d]+(\s)?[a-zA-Z\d]*/;
+    return postCodePattern.test(param);
+}
+
+export function isPostalCodeUK(param: string): boolean {
+    const postCodePattern = /^[a-zA-Z\d]+(\s)?[a-zA-Z\d]*/;
+    return postCodePattern.test(param);
+}
+
+export function isName(param: string): boolean {
+    const namePattern = /^[a-zA-Z"-]+(\s[a-zA-Z"-])*[a-zA-Z"-]*/;   // Abi Charles Africa America
+    return namePattern.test(param);
+}
+
+export function isURL(param: string): boolean {
+    // Abi Charles Africa America
+    // const namePattern = /^[a-zA-Z\d\-\\/_.:]+$/;
+    const namePattern = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&\/=]*)$/
+    return namePattern.test(param);
+
+}
+
+export function isBusinessNumber(param: string): boolean {
+    // business number format
+    const bnPattern = /^[\d-]+$/;
+    return bnPattern.test(param);
+}
+
+export function isStandardCode(param: string): boolean {
+    // Product Group | Body & Soul10
+    const standardCodePattern = /^[a-zA-Z\d]+[&\s\-_]*[a-zA-Z\d$#]*$/;
+    return standardCodePattern.test(param);
+}
+
+export function isCountryCode(param: string): boolean {
+    // langCode must be string of format en-US
+    const countryCodePattern = /^[a-z]{2}-[A-Z]{2}$/;
+    return countryCodePattern.test(param);
+}
+
+export function isLanguageCode(param: string): boolean {
+    // langCode must be string of format en-US
+    const langCodePattern = /^[a-z]{2}-[A-Z]{2}$/;
+    return langCodePattern.test(param);
+}
+
+export function isWordSpace(param: string): boolean {
+    // words with spaces and hyphens, no numbers
+    const wordSpacePattern = /^[a-zA-Z\d,()"._&]+[\s\-a-zA-Z\d,()"._&]*[a-zA-Z\d,()"._?]*$/;
+    return wordSpacePattern.test(param);
+}
+
+export function isLeapYear(year: number): boolean {
+    // Any year that is evenly divisible by 400
+    // OR
+    // Any year that is evenly divisible by 4 but not evenly divisible by 100
+    // OR
+    // the day of the month February for the specified year is 29
+    return year % 400 == 0 || (year % 4 == 0 && year % 100 != 0) || new Date(year, 1, 29).getDate() === 29;
+}
+
+export function isLabelCode(param: string): boolean {
+    // firstName_middleName_lastName
+    const labelCodePattern = /^[a-zA-Z]+[_\-a-zA-Z]*[_a-z\d]*$/;
+    return labelCodePattern.test(param);
+}
+
+export function isErrorCode(param: string): boolean {
+    // error code format (AB10-100, AB900)
+    const errorCodePattern = /^[a-zA-Z\d]+-*\d*$/;
+    return errorCodePattern.test(param);
+}
+
+export function isPathName(param: string): boolean {
+    // mysite.new_base.nicelook
+    const pathNamePattern = /^[a-zA-Z\d/]+[_a-zA-Z\d./]*[a-zA-Z\d/]*$/;
+    return pathNamePattern.test(param);
+}
+
+export function isNameNoSpace(param: string): boolean {
+    // JohnPaul
+    const nameNoSpacePattern = /[a-zA-Z]+/;
+    return nameNoSpacePattern.test(param);
+}
+
+export function isDescription(param: string): boolean {
+    const descPattern = /^[a-zA-Z\d\s\\.,:/()*_|\-!@#$%&]+$/; // Alphanumeric string with spaces, and
+    // (.,:/()*_-|!@)
+    return descPattern.test(param);
+}
+
+export function isMessage(param: string): boolean {
+    const descPattern = /^[a-zA-Z\d\s\\.,:/()*_\-!@#$%&]+$/; // Alphanumeric string with spaces, and
+    // (.,:/()*_-!@) - exclude |, reserved for message separation
+    return descPattern.test(param);
+}
+
+export function isCurrency(param: string): boolean {
+    const currencyPattern = /^[a-zA-Z#$]+$/;
+    return currencyPattern.test(param);
+}
+
 export function getAge(dateString: string): number {
     const today = new Date();
     const birthDate = new Date(dateString);
