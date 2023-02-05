@@ -176,8 +176,10 @@ export const frequency = (arr: Array<number>, interval: number, valueLabel: stri
     }
 }
 
-// statFrequency function returns the frequency / relative / cumulative / relative-cumulative frequencies of a slice of type float.
-export const statFrequency = (arr: Array<number>, interval: number, valueLabel: string): StatFrequencyResult => {
+/**
+ * frequencyStat function returns the frequency / relative / cumulative / relative-cumulative frequencies of a slice of type float.
+ */
+export const frequencyStat = (arr: Array<number>, interval: number, valueLabel: string): StatFrequencyResult => {
     // Compute frequency values
     const freqRes = frequency(arr, interval, valueLabel)
     const freqResult = freqRes.result
@@ -207,8 +209,10 @@ export const statFrequency = (arr: Array<number>, interval: number, valueLabel: 
     }
 }
 
-// IQRange InterQuartileRange returns the difference between the first and third quartiles (Q1 and Q3),
-// including quartile-values[Q0/min, Q1/25%, Q2/50%(median), Q3/75% & Q4/max].
+/**
+ * IQRange InterQuartileRange returns the difference between the first and third quartiles (Q1 and Q3),
+ * including quartile-values[Q0/min, Q1/25%, Q2/50%(median), Q3/75% & Q4/max].
+ */
 export const IQRange = (arr: Array<number>, precision: number): QuartilesType => {
     if (precision < 1) {
         precision = 2 // default
@@ -254,17 +258,23 @@ export const IQRange = (arr: Array<number>, precision: number): QuartilesType =>
 
 // TODO: complete the stats-function below
 
-// meanSquareError returns the mean-square-error value from the array of numbers.
+/**
+ * meanSquareError returns the mean-square-error value from the array of numbers.
+ */
 export const meanSquareError = () => {
 
 }
 
-// meanSquareRootError returns the mean-square-root-error value from the array of numbers.
+/**
+ * meanSquareRootError returns the mean-square-root-error value from the array of numbers.
+ */
 export const meanSquareRootError = () => {
 
 }
 
-// knn computes and returns the knn value from the array of numbers.
+/**
+ * knn computes and returns the knn value from the array of numbers.
+ */
 export const knn = () => {
 
 }

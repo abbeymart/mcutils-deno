@@ -1,10 +1,10 @@
 import {
     assertEquals, assertNotEquals, mcTest, postTestResult,
 } from "../test_deps.ts";
-import { max, mean, median, min, minMax, sampleStandardDeviation } from "../src/index.ts";
+import { max, mean, median, min, minMax, populationStandardDeviation, sampleStandardDeviation } from "../src/index.ts";
 import {
-    arrayOfNumber, maxResult, meanResult, medianResult, minMaxResult, minResult, stdDeviationResult,
-    stdDeviationResultEst,
+    arrayOfNumber, arrayOfNumber2, maxResult, meanResult, medianResult, minMaxResult, minResult, stdDeviationResult,
+    stdDeviationResultEst, stdDeviationResultEst2,
 } from "./data/testData.ts";
 
 (async () => {
@@ -81,6 +81,27 @@ import {
             assertNotEquals(result, 1, `Expected outcome: ${stdDeviationResultEst}`);
         },
     });
+
+    await mcTest({
+        name    : "Successfully returns population-standard-deviation, rounded to 2 decimal places, result",
+        testFunc: () => {
+            const result = populationStandardDeviation(arrayOfNumber2, 2);
+            // const resultEst = Number(result.toFixed(5));
+            console.log("standardDeviation-Res: ", result);
+            assertEquals(result, stdDeviationResultEst2, `Expected outcome: ${stdDeviationResultEst}`);
+            assertNotEquals(result, 1, `Expected outcome: ${stdDeviationResultEst}`);
+        },
+    });
+
+    // variance
+
+    // interval
+
+    // frequency
+
+    // frequencyStat
+
+    // IQRange
 
     postTestResult();
 
