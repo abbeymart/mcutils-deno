@@ -306,7 +306,6 @@ export const deciles = (arr: Array<number>, precision = 2): QuartilesType => {
     }
 }
 
-
 // Percentiles returns slice-values that separate the data into 100 equal parts (quantiles). TODO: review/complete.
 // Examples: 1%, 2%, 3%... 100%. Optional precision parameter value defaults to 2.
 export const percentiles = (arr: Array<number>, precision = 2): QuartilesType => {
@@ -351,7 +350,6 @@ export const percentiles = (arr: Array<number>, precision = 2): QuartilesType =>
         IQR    : IQR,
     }
 }
-
 
 // TODO: complete the stats-function below
 

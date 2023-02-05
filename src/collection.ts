@@ -17,7 +17,6 @@ export function* filterGen<T>(val: Array<T>, filterFunc: FilterFunc<T>) {
     }
 }
 
-
 // takeGen generator-function yields series of values up to num from the val/array values.
 export function* takeGen<T>(val: Array<T>, num: number) {
     let count = 0;

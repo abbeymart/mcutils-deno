@@ -1,3 +1,5 @@
+import { CommonCSVReaderOptions, CSVReaderOptions } from "https://deno.land/x/csv@v0.8.0/reader.ts";
+
 export type ValueType =
     Record<string, unknown>
     | Array<Record<string, unknown>>
@@ -199,4 +201,20 @@ export interface MatrixResult {
 //     message: string;
 //     result: Array<number>;
 // }
+
+export interface CsvToJsonParams {
+    csvPath: string;
+    jsonPath: string;
+    options: CSVReaderOptions;
+}
+
+export interface XmlToJsonParams {
+    xmlPath: string;
+    jsonPath: string;
+}
+
+export interface XmlToJsonResult {
+    record: ObjectType | Array<ObjectType>;
+    json: string;
+}
 

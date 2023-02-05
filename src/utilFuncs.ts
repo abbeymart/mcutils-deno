@@ -1,10 +1,12 @@
 import {
+    ArrayOfString,
     ArrayValue,
-    ComputationResponse, CounterResult, Locale, LocaleFilesType, LocaleOptions, MessageObject, ObjectType,
+    ComputationResponse, CounterResult, CsvToJsonParams, Locale, LocaleFilesType, LocaleOptions, MessageObject,
+    ObjectType,
     PERMITTED_SEPARATORS,
-    ValueType
+    ValueType, XmlToJsonParams
 } from "./types.ts";
-import { getResMessage, ResponseMessage } from "../deps.ts";
+import { getResMessage, parse, readCSV, ResponseMessage, xml2js } from "../deps.ts";
 
 export const getFullName = (firstname: string, lastname: string, middlename = ""): string => {
     if (firstname && middlename && lastname) {
@@ -264,98 +266,99 @@ export const getLocale = (localeFiles: LocaleFilesType, options: LocaleOptions =
 
     if (localeType === "mcConstants") {
         return {
-            getShortDesc: () => {
-                return myLocale.SHORT_DESC? myLocale.SHORT_DESC : 20;
+            getShortDesc         : () => {
+                return myLocale.SHORT_DESC ? myLocale.SHORT_DESC : 20;
             },
-            getDefaultLanguage: () => {
-                return myLocale.DEFAULT_LANG? myLocale.DEFAULT_LANG : "en-US";
+            getDefaultLanguage   : () => {
+                return myLocale.DEFAULT_LANG ? myLocale.DEFAULT_LANG : "en-US";
             },
-            getDefaultCurrency: () => {
-                return myLocale.DEFAULT_CURRENCY? myLocale.DEFAULT_CURRENCY : "USD";
+            getDefaultCurrency   : () => {
+                return myLocale.DEFAULT_CURRENCY ? myLocale.DEFAULT_CURRENCY : "USD";
             },
-            getDDPLimit: () => {
-                return myLocale.DDP_LIMIT? myLocale.DDP_LIMIT : 20;
+            getDDPLimit          : () => {
+                return myLocale.DDP_LIMIT ? myLocale.DDP_LIMIT : 20;
             },
-            getCreateLogType: () => {
-                return myLocale.CREATE_LOG_TYPE? myLocale.CREATE_LOG_TYPE : "create";
+            getCreateLogType     : () => {
+                return myLocale.CREATE_LOG_TYPE ? myLocale.CREATE_LOG_TYPE : "create";
             },
-            getUpdateLogType: () => {
-                return myLocale.UPDATE_LOG_TYPE? myLocale.UPDATE_LOG_TYPE : "update";
+            getUpdateLogType     : () => {
+                return myLocale.UPDATE_LOG_TYPE ? myLocale.UPDATE_LOG_TYPE : "update";
             },
-            getRemoveLogType: () => {
-                return myLocale.REMOVE_LOG_TYPE? myLocale.REMOVE_LOG_TYPE : "remove";
+            getRemoveLogType     : () => {
+                return myLocale.REMOVE_LOG_TYPE ? myLocale.REMOVE_LOG_TYPE : "remove";
             },
-            getSearchLogType: () => {
-                return myLocale.SEARCH_LOG_TYPE? myLocale.SEARCH_LOG_TYPE : "read";
+            getSearchLogType     : () => {
+                return myLocale.SEARCH_LOG_TYPE ? myLocale.SEARCH_LOG_TYPE : "read";
             },
-            getLoginType: () => {
-                return myLocale.LOGIN_LOG_TYPE? myLocale.LOGIN_LOG_TYPE : "login";
+            getLoginType         : () => {
+                return myLocale.LOGIN_LOG_TYPE ? myLocale.LOGIN_LOG_TYPE : "login";
             },
-            getLogoutType: () => {
-                return myLocale.LOGOUT_LOG_TYPE? myLocale.LOGOUT_LOG_TYPE : "logout";
+            getLogoutType        : () => {
+                return myLocale.LOGOUT_LOG_TYPE ? myLocale.LOGOUT_LOG_TYPE : "logout";
             },
-            getLoginTimeout: () => {
-                return myLocale.LOGIN_TIMEOUT? myLocale.LOGIN_TIMEOUT : 24 * 60 * 60;
+            getLoginTimeout      : () => {
+                return myLocale.LOGIN_TIMEOUT ? myLocale.LOGIN_TIMEOUT : 24 * 60 * 60;
             },
-            getStateTimeout: () => {
-                return myLocale.STATE_TIMEOUT? myLocale.STATE_TIMEOUT : 60 * 60;
+            getStateTimeout      : () => {
+                return myLocale.STATE_TIMEOUT ? myLocale.STATE_TIMEOUT : 60 * 60;
             },
-            getRememberMeTimeout: () => {
-                return myLocale.REMEMBER_TIMEOUT? myLocale.REMEMBER_TIMEOUT : 30 * 24 * 60 * 60;
+            getRememberMeTimeout : () => {
+                return myLocale.REMEMBER_TIMEOUT ? myLocale.REMEMBER_TIMEOUT : 30 * 24 * 60 * 60;
             },
-            getLogCreate: () => {
-                return myLocale.LOG_CREATE? myLocale.LOG_CREATE : false;
+            getLogCreate         : () => {
+                return myLocale.LOG_CREATE ? myLocale.LOG_CREATE : false;
             },
-            getLogRead: () => {
-                return myLocale.LOG_READ? myLocale.LOG_READ : false;
+            getLogRead           : () => {
+                return myLocale.LOG_READ ? myLocale.LOG_READ : false;
             },
-            getLogUpdate: () => {
-                return myLocale.LOG_UPDATE? myLocale.LOG_UPDATE : false;
+            getLogUpdate         : () => {
+                return myLocale.LOG_UPDATE ? myLocale.LOG_UPDATE : false;
             },
-            getLogDelete: () => {
-                return myLocale.LOG_DELETE? myLocale.LOG_DELETE : false;
+            getLogDelete         : () => {
+                return myLocale.LOG_DELETE ? myLocale.LOG_DELETE : false;
             },
-            getLogLogin: () => {
-                return myLocale.LOG_LOGIN? myLocale.LOG_LOGIN : false;
+            getLogLogin          : () => {
+                return myLocale.LOG_LOGIN ? myLocale.LOG_LOGIN : false;
             },
-            getLogLogout: () => {
-                return myLocale.LOG_LOGOUT? myLocale.LOG_LOGOUT : false;
+            getLogLogout         : () => {
+                return myLocale.LOG_LOGOUT ? myLocale.LOG_LOGOUT : false;
             },
-            getMaxFileCount: () => {
-                return myLocale.MAX_FILE_COUNT? myLocale.MAX_FILE_COUNT : 10;
+            getMaxFileCount      : () => {
+                return myLocale.MAX_FILE_COUNT ? myLocale.MAX_FILE_COUNT : 10;
             },
-            getMaxFileSize: () => {
-                return myLocale.MAX_FILE_SIZE? myLocale.MAX_FILE_SIZE : 10_000_000;
+            getMaxFileSize       : () => {
+                return myLocale.MAX_FILE_SIZE ? myLocale.MAX_FILE_SIZE : 10_000_000;
             },
             getMaxProductQuantity: () => {
-                return myLocale.MAX_PRODUCT_QTY? myLocale.MAX_PRODUCT_QTY: 1000;
+                return myLocale.MAX_PRODUCT_QTY ? myLocale.MAX_PRODUCT_QTY : 1000;
             },
-            getQueryLimit: () => {
-                return myLocale.QUERY_REC_LIMIT? myLocale.QUERY_REC_LIMIT : 100;
+            getQueryLimit        : () => {
+                return myLocale.QUERY_REC_LIMIT ? myLocale.QUERY_REC_LIMIT : 100;
             },
-            getDefaultCart: () => {
-                return myLocale.DEFAULT_CART? myLocale.DEFAULT_CART : "cart";
+            getDefaultCart       : () => {
+                return myLocale.DEFAULT_CART ? myLocale.DEFAULT_CART : "cart";
             },
-            getDefaultWish: () => {
-                return myLocale.DEFAULT_WISH? myLocale.DEFAULT_WISH : "wishes";
+            getDefaultWish       : () => {
+                return myLocale.DEFAULT_WISH ? myLocale.DEFAULT_WISH : "wishes";
             },
-            getPasswordMinLength: () => {
-                return myLocale.PASSWORD_MIN_LENGTH? myLocale.PASSWORD_MIN_LENGTH : 10;
+            getPasswordMinLength : () => {
+                return myLocale.PASSWORD_MIN_LENGTH ? myLocale.PASSWORD_MIN_LENGTH : 10;
             },
             getLoginNameMinLength: () => {
-                return myLocale.LOGIN_NAME_MIN_LENGTH? myLocale.LOGIN_NAME_MIN_LENGTH : 6;
+                return myLocale.LOGIN_NAME_MIN_LENGTH ? myLocale.LOGIN_NAME_MIN_LENGTH : 6;
             },
-            getLoginMaxRetry: () => {
-                return myLocale.LOGIN_MAX_RETRY? myLocale.LOGIN_MAX_RETRY : 3;
+            getLoginMaxRetry     : () => {
+                return myLocale.LOGIN_MAX_RETRY ? myLocale.LOGIN_MAX_RETRY : 3;
             },
-            getLoginLockoutTime: () => {
-                return myLocale.LOGIN_LOCKOUT_TIME? myLocale.LOGIN_LOCKOUT_TIME : 15 * 60;
+            getLoginLockoutTime  : () => {
+                return myLocale.LOGIN_LOCKOUT_TIME ? myLocale.LOGIN_LOCKOUT_TIME : 15 * 60;
             },
-            getFileUploadRoot: () => {
-                return myLocale.FILE_UPLOAD_ROOT? myLocale.FILE_UPLOAD_ROOT : "upload";
+            getFileUploadRoot    : () => {
+                return myLocale.FILE_UPLOAD_ROOT ? myLocale.FILE_UPLOAD_ROOT : "upload";
             },
-            getAllowedDocTypes: () => {
-                return myLocale.ALLOWED_DOC_TYPES? myLocale.ALLOWED_DOC_TYPES : ["doc", "xls", "pdf", "png", "mpeg", "mpg"];
+            getAllowedDocTypes   : () => {
+                return myLocale.ALLOWED_DOC_TYPES ? myLocale.ALLOWED_DOC_TYPES :
+                    ["doc", "xls", "pdf", "png", "mpeg", "mpg"];
             },
         } as Locale;
     } else {
@@ -400,3 +403,171 @@ export function getAge(dateString: string): number {
     }
     return age;
 }
+
+// sleep functions await the step/action for the specified milliseconds(ms), defaults to 1000ms(1 second).
+export function sleep(ms = 1000) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export async function csvToObjects(params: CsvToJsonParams): Promise<ResponseMessage> {
+    try {
+        const csvFile = await Deno.open(params.csvPath);
+        const options = {
+            columnSeparator: params.options.columnSeparator || ",",
+            lineSeparator  : params.options.lineSeparator || "\r\n",
+            // quote: "$",
+        };
+        // read the first-line as header
+        let count = 0
+        const headers: ArrayOfString = []
+        const jsonRecords: Array<ObjectType> = []
+        for await (const row of readCSV(csvFile, options)) {
+            // computer header/column/field-names
+            if (count === 0) {
+                for await (const cell of row) {
+                    headers.push(cell)
+                }
+            } else {
+                // compute json-content and write to jsonFile
+                const jsonRecord: ObjectType = {}
+                let cellCount = 0
+                for await (const cell of row) {
+                    // compute non-string-values: number, boolean, object
+                    if (Number(cell)) {
+                        jsonRecord[headers[cellCount]] = Number(cell)
+                    } else if (cell === "true" || cell === "false") {
+                        jsonRecord[headers[cellCount]] = stringToBool(cell)
+                    } else if (new Date(cell)) {
+                        jsonRecord[headers[cellCount]] = new Date(cell)
+                    } else if (JSON.parse(cell)) {
+                        jsonRecord[headers[cellCount]] = JSON.parse(cell)
+                    } else {
+                        jsonRecord[headers[cellCount]] = cell
+                    }
+                    cellCount += 1
+                }
+                // update jsonRecords
+                jsonRecords.push(jsonRecord)
+            }
+            count += 1
+        }
+        // close files
+        csvFile.close();
+        // return success response
+        return getResMessage("success", {
+            message: "success",
+            value  : jsonRecords,
+        })
+    } catch (e) {
+        return getResMessage("conversionError", {
+            message: `${e.message}`,
+            value  : [],
+        })
+    }
+}
+
+export async function csvToJson(params: CsvToJsonParams): Promise<ResponseMessage> {
+    try {
+        const csvFile = await Deno.open(params.csvPath);
+        const options = {
+            columnSeparator: params.options.columnSeparator || ",",
+            lineSeparator  : params.options.lineSeparator || "\r\n",
+            // quote: "$",
+        };
+        // read the first-line as header
+        let count = 0
+        const headers: ArrayOfString = []
+        for await (const row of readCSV(csvFile, options)) {
+            // computer header/column/field-names
+            if (count === 0) {
+                for await (const cell of row) {
+                    headers.push(cell)
+                }
+            } else {
+                // compute json-content and write to jsonFile
+                const jsonRecord: ObjectType = {}
+                let cellCount = 0
+                for await (const cell of row) {
+                    // compute non-string-value
+                    // compute non-string-values: number, boolean, object
+                    if (Number(cell)) {
+                        jsonRecord[headers[cellCount]] = Number(cell)
+                    } else if (cell === "true" || cell === "false") {
+                        jsonRecord[headers[cellCount]] = stringToBool(cell)
+                    } else if (new Date(cell)) {
+                        jsonRecord[headers[cellCount]] = new Date(cell)
+                    } else if (JSON.parse(cell)) {
+                        jsonRecord[headers[cellCount]] = JSON.parse(cell)
+                    } else {
+                        jsonRecord[headers[cellCount]] = cell
+                    }
+                    cellCount += 1
+                }
+                // write to the json-file, once record at a time (more-efficient)
+                Deno.writeTextFileSync(params.jsonPath, JSON.stringify(jsonRecord), {
+                    append: true,
+                })
+            }
+            count += 1
+        }
+        // close files
+        csvFile.close();
+        // return success response
+        return getResMessage("success", {
+            message: "success",
+            value  : {},
+        })
+    } catch (e) {
+        return getResMessage("conversionError", {
+            message: `${e.message}`,
+            value  : {},
+        })
+    }
+}
+
+export function xmlToJsonObject(params: XmlToJsonParams): ResponseMessage {
+    try {
+        // read xmlFile content
+        const xmlFileContent = Deno.readTextFileSync(params.xmlPath)
+        // convert xmlFileContent to object/record
+        const record = parse(xmlFileContent);
+        // return success response
+        return getResMessage("success", {
+            message: "success",
+            value  : {
+                record: record,
+                json  : JSON.stringify(record, null, 4)
+            },
+        })
+    } catch (e) {
+        return getResMessage("conversionError", {
+            message: `${e.message}`,
+            value  : {},
+        })
+    }
+}
+
+export function xmlToJsonObject2(params: XmlToJsonParams): ResponseMessage {
+    try {
+        // read xmlFile content
+        const xmlFileContent = Deno.readTextFileSync(params.xmlPath)
+        // convert xmlFileContent to object/record
+        const record = xml2js(xmlFileContent, {
+            compact: true,
+        });
+        // return success response
+        return getResMessage("success", {
+            message: "success",
+            value  : {
+                record: record,
+                json  : JSON.stringify(record, null, 4)
+            },
+        })
+    } catch (e) {
+        return getResMessage("conversionError", {
+            message: `${e.message}`,
+            value  : {},
+        })
+    }
+}
+
