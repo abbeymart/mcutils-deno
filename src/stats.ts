@@ -3,9 +3,11 @@ import { FrequencyResult, FrequencyValue, QuartilesType, StatFrequencyResult, St
 
 import { counter } from "./utilFuncs.ts";
 
-export const mean = (arr: Array<number>, precision: number): number => {
+// mean function returns the average of the arr value.
+// Optional precision parameter value defaults to 2.
+export const mean = (arr: Array<number>, precision = 2): number => {
     if (precision < 1) {
-        precision = 2 // default
+        precision = 2 /// default
     }
     let sum = 0.00;
     const arrLength = arr.length;
@@ -17,9 +19,10 @@ export const mean = (arr: Array<number>, precision: number): number => {
 }
 
 // median returns the median value from the array of numbers.
-export const median = (arr: Array<number>, precision: number): number => {
+// Optional precision parameter value defaults to 2.
+export const median = (arr: Array<number>, precision = 2): number => {
     if (precision < 1) {
-        precision = 2 // default
+        precision = 2 /// default
     }
     // sort numbers, ascending order
     arr.sort((a, b) => a - b);
@@ -37,9 +40,10 @@ export const median = (arr: Array<number>, precision: number): number => {
 }
 
 // variance returns the variance value from the array of numbers.
-export const variance = (arr: Array<number>, precision: number): number => {
+// Optional precision parameter value defaults to 2.
+export const variance = (arr: Array<number>, precision = 2): number => {
     if (precision < 1) {
-        precision = 2 // default
+        precision = 2 /// default
     }
     let deltaSquareSum = 0.00;
     const arrLength = arr.length;
@@ -52,9 +56,10 @@ export const variance = (arr: Array<number>, precision: number): number => {
 }
 
 // sampleStandardDeviation returns the standard deviation value from the array of numbers.
-export const sampleStandardDeviation = (arr: Array<number>, precision: number): number => {
+// Optional precision parameter value defaults to 2.
+export const sampleStandardDeviation = (arr: Array<number>, precision = 2): number => {
     if (precision < 1) {
-        precision = 2 // default
+        precision = 2 /// default
     }
     let deltaSquareSum = 0.00;
     const arrLength = arr.length;
@@ -67,9 +72,10 @@ export const sampleStandardDeviation = (arr: Array<number>, precision: number): 
 }
 
 // populationStandardDeviation returns the standard deviation value from the array of numbers.
-export const populationStandardDeviation = (arr: Array<number>, precision: number): number => {
+// Optional precision parameter value defaults to 2.
+export const populationStandardDeviation = (arr: Array<number>, precision = 2): number => {
     if (precision < 1) {
-        precision = 2 // default
+        precision = 2 /// default
     }
     let deltaSquareSum = 0.00;
     const arrLength = arr.length;
@@ -113,7 +119,6 @@ export const minMax = (arr: Array<number>): MinMax => {
     };
 }
 
-
 // interval calculates the width/interval of the sample data size
 export const interval = (arr: Array<number>): number => {
     // sort numbers, ascending order
@@ -126,19 +131,15 @@ export const interval = (arr: Array<number>): number => {
 }
 
 // frequency function returns the frequency / occurrence of a slice of type float.
-export const frequency = (arr: Array<number>, interval: number, valueLabel: string): FrequencyResult => {
+export const frequency = (arr: Array<number>, interval = 1, valueLabel = "value"): FrequencyResult => {
+    if (interval < 1) {
+        interval = 1 /// default
+    }
     // sort numbers, ascending order
     arr.sort((a, b) => a - b);
     const arrLength = arr.length
     const min = arr[0]
     const max = arr[arrLength - 1]
-    // TODO: compose range and counts/frequency/occurrence
-    if (valueLabel == "") {
-        valueLabel = "value"
-    }
-    if (interval < 1) {
-        interval = 1
-    }
     const freqValue: Array<FrequencyValue> = []
     if (interval == 1) {
         // Obtain the counter values for the arr items
@@ -179,7 +180,10 @@ export const frequency = (arr: Array<number>, interval: number, valueLabel: stri
 /**
  * frequencyStat function returns the frequency / relative / cumulative / relative-cumulative frequencies of a slice of type float.
  */
-export const frequencyStat = (arr: Array<number>, interval: number, valueLabel: string): StatFrequencyResult => {
+export const frequencyStat = (arr: Array<number>, interval = 1, valueLabel = "value"): StatFrequencyResult => {
+    if (interval < 1) {
+        interval = 1 /// default
+    }
     // Compute frequency values
     const freqRes = frequency(arr, interval, valueLabel)
     const freqResult = freqRes.result
@@ -212,10 +216,11 @@ export const frequencyStat = (arr: Array<number>, interval: number, valueLabel: 
 /**
  * IQRange InterQuartileRange returns the difference between the first and third quartiles (Q1 and Q3),
  * including quartile-values[Q0/min, Q1/25%, Q2/50%(median), Q3/75% & Q4/max].
+ * optional precision parameter value defaults to 2
  */
-export const IQRange = (arr: Array<number>, precision: number): QuartilesType => {
+export const IQRange = (arr: Array<number>, precision = 2): QuartilesType => {
     if (precision < 1) {
-        precision = 2 // default
+        precision = 2 /// default
     }
     // sort numbers, ascending order
     arr.sort((a, b) => a - b);
@@ -224,8 +229,8 @@ export const IQRange = (arr: Array<number>, precision: number): QuartilesType =>
     const max = arr[arrLength - 1]
     // Determine the Q1, Q2, Q3 and Q4 values from arr
     const Q2 = median(arr, precision)
-    let Q1 = 0.00
-    let Q3 = 0.00
+    let Q1: number
+    let Q3: number
     // Determine if the arr is even or odd
     let isEven = false
     if (arrLength % 2 == 0) {
@@ -255,6 +260,98 @@ export const IQRange = (arr: Array<number>, precision: number): QuartilesType =>
         IQR    : IQR,
     }
 }
+
+// deciles returns slice-values that separate the data into 10 equal parts (quantiles). TODO: review/complete.
+// Examples: 10%, 20%[Q2], 30%[Q3]... 100%
+export const deciles = (arr: Array<number>, precision = 2): QuartilesType => {
+    if (precision < 1) {
+        precision = 2 /// default
+    }
+    // sort numbers, ascending order
+    arr.sort((a, b) => a - b);
+    const arrLength = arr.length
+    const min = arr[0]
+    const max = arr[arrLength - 1]
+    // Determine the Q1, Q2, Q3 and Q4 values from arr
+    const Q2 = median(arr, precision)
+    let Q1: number
+    let Q3: number
+    // Determine if the arr is even or odd
+    let isEven = false
+    if (arrLength % 2 == 0) {
+        isEven = true
+    }
+    // IQR = Q3 - Q1
+    let IQR = 0.00
+    if (isEven) {
+        Q1 = median(arr.slice(0, arrLength / 2), precision)
+        Q3 = median(arr.slice(arrLength / 2,), precision)
+        IQR = Q3 - Q1
+    } else {
+        const halfDataLength = arrLength / 2 // the ceiling value, i.e.  11, 5
+        // compute medians (Q1 and Q3) to be inclusive of Q2(arr-median)
+        Q1 = median(arr.slice(0, halfDataLength + 1), precision)
+        Q3 = median(arr.slice(halfDataLength,), precision)
+        IQR = Q3 - Q1
+    }
+    return {
+        minimum:   min,
+        maximum:max, // Q4
+        range  : max - min,
+        Q1     : Q1,
+        Q2     : Q2, // Median
+        Q3     : Q3,
+        Q4     : max,
+        IQR    : IQR,
+    }
+}
+
+
+// Percentiles returns slice-values that separate the data into 100 equal parts (quantiles). TODO: review/complete.
+// Examples: 1%, 2%, 3%... 100%. Optional precision parameter value defaults to 2.
+export const percentiles = (arr: Array<number>, precision = 2): QuartilesType => {
+    if (precision < 1) {
+        precision = 2 /// default
+    }
+    // sort numbers, ascending order
+    arr.sort((a, b) => a - b);
+    const arrLength = arr.length
+    const min = arr[0]
+    const max = arr[arrLength - 1]
+    // Determine the Q1, Q2, Q3 and Q4 values from arr
+    const Q2 = median(arr, precision)
+    let Q1: number
+    let Q3: number
+    // Determine if the arr is even or odd
+    let isEven = false
+    if (arrLength % 2 == 0) {
+        isEven = true
+    }
+    // IQR = Q3 - Q1
+    let IQR = 0.00
+    if (isEven) {
+        Q1 = median(arr.slice(0, arrLength / 2), precision)
+        Q3 = median(arr.slice(arrLength / 2,), precision)
+        IQR = Q3 - Q1
+    } else {
+        const halfDataLength = arrLength / 2 // the ceiling value, i.e.  11, 5
+        // compute medians (Q1 and Q3) to be inclusive of Q2(arr-median)
+        Q1 = median(arr.slice(0, halfDataLength + 1), precision)
+        Q3 = median(arr.slice(halfDataLength,), precision)
+        IQR = Q3 - Q1
+    }
+    return {
+        minimum:   min,
+        maximum:max, // Q4
+        range  : max - min,
+        Q1     : Q1,
+        Q2     : Q2, // Median
+        Q3     : Q3,
+        Q4     : max,
+        IQR    : IQR,
+    }
+}
+
 
 // TODO: complete the stats-function below
 

@@ -2,8 +2,9 @@ import { MatrixResult, } from "./types.ts";
 
 /**
  * / addMatrices function adds two matrices of the same dimensions.
+ * Optional precision parameter value defaults to 0, for Integer value.
  */
-export const addMatrices = (matrix1: Array<Array<number>>, matrix2: Array<Array<number>>, precision: number): MatrixResult => {
+export const addMatrices = (matrix1: Array<Array<number>>, matrix2: Array<Array<number>>, precision = 0): MatrixResult => {
     if (precision < 0) {
         precision = 0 /// default
     }
@@ -56,7 +57,7 @@ export const addMatrices = (matrix1: Array<Array<number>>, matrix2: Array<Array<
 /**
  * addMultipleMatrices function [tensor] adds multiple matrices of the same dimensions.
  */
-export const addMultipleMatrices = (matrices: Array<Array<Array<number>>>, precision: number): MatrixResult => {
+export const addMultipleMatrices = (matrices: Array<Array<Array<number>>>, precision = 0): MatrixResult => {
     if (precision < 0) {
         precision = 0 /// default
     }
@@ -107,7 +108,7 @@ export const addMultipleMatrices = (matrices: Array<Array<Array<number>>>, preci
 /**
  * subtractMatrices function subtract two matrices of the same dimensions.
  */
-export const subtractMatrices = (matrix1: Array<Array<number>>, matrix2: Array<Array<number>>, precision: number): MatrixResult => {
+export const subtractMatrices = (matrix1: Array<Array<number>>, matrix2: Array<Array<number>>, precision = 0): MatrixResult => {
     if (precision < 0) {
         precision = 0 /// default
     }
@@ -161,7 +162,7 @@ export const subtractMatrices = (matrix1: Array<Array<number>>, matrix2: Array<A
 /**
  * subtractMultipleMatrices function [tensor] subtract multiple matrices of the same dimensions.
  */
-export const subtractMultipleMatrices = (matrices: Array<Array<Array<number>>>, precision: number): MatrixResult => {
+export const subtractMultipleMatrices = (matrices: Array<Array<Array<number>>>, precision = 0): MatrixResult => {
     if (precision < 0) {
         precision = 0 /// default
     }
@@ -212,7 +213,7 @@ export const subtractMultipleMatrices = (matrices: Array<Array<Array<number>>>, 
 /**
  * addScalarMatrix function adds a scalar Value to the matrix/matrices.
  */
-export const addScalarMatrix = (matrix: Array<Array<number>>, scalar: number, precision: number): MatrixResult => {
+export const addScalarMatrix = (matrix: Array<Array<number>>, scalar: number, precision = 0): MatrixResult => {
     if (precision < 0) {
         precision = 0 /// default
     }
@@ -262,7 +263,7 @@ export const addScalarMatrix = (matrix: Array<Array<number>>, scalar: number, pr
 /**
  * subtractScalarMatrix function subtracts a scalar Value from the matrix/matrices.
  */
-export const subtractScalarMatrix = (matrix: Array<Array<number>>, scalar: number, precision: number): MatrixResult => {
+export const subtractScalarMatrix = (matrix: Array<Array<number>>, scalar: number, precision = 0 ): MatrixResult => {
     if (precision < 0) {
         precision = 0 /// default
     }
@@ -312,7 +313,7 @@ export const subtractScalarMatrix = (matrix: Array<Array<number>>, scalar: numbe
 /**
  * multiplyScalarMatrix function multiply a scalar Value with the matrix/matrices.
  */
-export const multiplyScalarMatrix = (matrix: Array<Array<number>>, scalar: number, precision: number): MatrixResult => {
+export const multiplyScalarMatrix = (matrix: Array<Array<number>>, scalar: number, precision = 0): MatrixResult => {
     if (precision < 0) {
         precision = 0 /// default
     }
@@ -362,7 +363,7 @@ export const multiplyScalarMatrix = (matrix: Array<Array<number>>, scalar: numbe
 /**
  * divideScalarMatrix function the matrix/matrices by the scalar Value.
  */
-export const divideScalarMatrix = (matrix: Array<Array<number>>, scalar: number, precision: number): MatrixResult => {
+export const divideScalarMatrix = (matrix: Array<Array<number>>, scalar: number, precision = 0): MatrixResult => {
     if (precision < 0) {
         precision = 0 /// default
     }
@@ -452,10 +453,10 @@ export const transposeMatrix = (matrix: Array<Array<number>>): MatrixResult => {
 }
 
 /**
- * multiplyMatrix function multiply two matrices.
+ * multiplyMatrix function multiply two matrices - tensor.
  * The matrix1 single slice length must be the same as the number of columns in matrix2/sub-matrices.
  */
-export const multiplyMatrix = (matrix1: Array<number>, matrix2: Array<Array<number>>, precision: number): MatrixResult => {
+export const multiplyMatrix = (matrix1: Array<number>, matrix2: Array<Array<number>>, precision = 0): MatrixResult => {
     if (precision < 0) {
         precision = 0 /// default
     }
@@ -516,10 +517,10 @@ export const multiplyMatrix = (matrix1: Array<number>, matrix2: Array<Array<numb
 }
 
 /**
- * multiplyMatrices function multiply two matrices.
+ * multiplyMatrices function multiply two matrices - tensors.
  * The number of rows in matrix1 sub-matrices must be the same as the number of columns in matrix2.
  */
-export const multiplyMatrices = (matrix1: Array<Array<number>>, matrix2: Array<Array<number>>, precision: number): MatrixResult => {
+export const multiplyMatrices = (matrix1: Array<Array<number>>, matrix2: Array<Array<number>>, precision = 0): MatrixResult => {
     if (precision < 0) {
         precision = 0 /// default
     }
