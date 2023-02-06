@@ -3,7 +3,7 @@ import { FrequencyResult, FrequencyValue, QuartilesType, StatFrequencyResult, St
 
 import { counter } from "./utilFuncs.ts";
 
-// mean function returns the average of the arr value.
+// mean function returns the average of the arr value summation.
 // Optional precision parameter value defaults to 2.
 export const mean = (arr: Array<number>, precision = 2): number => {
     if (precision < 1) {
@@ -15,6 +15,21 @@ export const mean = (arr: Array<number>, precision = 2): number => {
         sum += v;
     }
     const result = sum / arrLength;
+    return Number(result.toFixed(precision))
+}
+
+// geometricMean function returns the average of the arr value multiplication.
+// Optional precision parameter value defaults to 2.
+export const geometricMean = (arr: Array<number>, precision = 2): number => {
+    if (precision < 1) {
+        precision = 2 /// default
+    }
+    let multi = 0.00;
+    const arrLength = arr.length;
+    for (const v of arr) {
+        multi *= v;
+    }
+    const result = multi / arrLength;
     return Number(result.toFixed(precision))
 }
 
