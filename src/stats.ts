@@ -29,7 +29,7 @@ export const geometricMean = (arr: Array<number>, precision = 2): number => {
     for (const v of arr) {
         multi *= v;
     }
-    const result = multi / arrLength;
+    const result = Math.pow(multi, 1/arrLength);
     return Number(result.toFixed(precision))
 }
 
