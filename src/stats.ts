@@ -1,5 +1,7 @@
 // mean returns the mean value from the array of numbers.
-import { FrequencyResult, FrequencyValue, QuartilesType, StatFrequencyResult, StatFrequencyValue } from "./types.ts";
+import {
+    FrequencyResult, FrequencyValue, MinMax, QuartilesType, StatFrequencyResult, StatFrequencyValue
+} from "./types.ts";
 
 import { counter } from "./utilFuncs.ts";
 
@@ -116,12 +118,6 @@ export const max = (arr: Array<number>): number => {
     arr.sort((a, b) => b - a);
     // return the minimum value
     return arr[0];
-}
-
-// Minimum and maximum values object type.
-export interface MinMax {
-    minimum: number;
-    maximum: number;
 }
 
 // max returns the maximum value from the array of numbers.

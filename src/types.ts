@@ -39,6 +39,17 @@ export interface MessageObject {
     [key: string]: string;
 }
 
+// Minimum and maximum values object type.
+export interface MinMax {
+    minimum: number;
+    maximum: number;
+}
+
+export interface UrlPathInfo {
+    parts: Array<string>;
+    lastIndex: number;
+}
+
 export interface ComputationResponse {
     code: string;
     value: ValueType;

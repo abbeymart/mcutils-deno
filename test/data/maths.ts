@@ -1,4 +1,4 @@
-import { ArrayOfNumber, ArrayOfString, ArrayOfSymbol, CounterType } from "../../src/index.ts";
+import { ArrayOfInt, ArrayOfNumber, ArrayOfString, ArrayOfSymbol, CounterType } from "../../src/types.ts";
 
 export const aLeapYear = 2000;
 export const notLeapYear = 2022;
@@ -15,7 +15,7 @@ export const pythagorasParam = 10;
 export const pythagorasResult = [[ 3, 4, 5 ], [ 6, 8, 10 ] ];
 
 export const pythagorasParam100 = 100;
-export const pythagorasResult100 = [
+export const pythagorasResult100: Array<ArrayOfInt> = [
     [ 3, 4, 5 ],     [ 5, 12, 13 ],    [ 6, 8, 10 ],
     [ 7, 24, 25 ],   [ 8, 15, 17 ],    [ 9, 12, 15 ],
     [ 9, 40, 41 ],   [ 10, 24, 26 ],   [ 11, 60, 61 ],

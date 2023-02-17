@@ -1,6 +1,6 @@
 import {
-    ArrayOfNumber, ArrayOfString, Locale, LocaleFilesType, MinMax, LocaleOptions
-} from "../../src/index.ts";
+    ArrayOfNumber, ArrayOfString, Locale, LocaleFilesType, MinMax, LocaleOptions, StatFrequencyResult, QuartilesType
+} from "../../src/types.ts";
 
 // collection
 export const arrayOfNumber: ArrayOfNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,];
@@ -69,19 +69,143 @@ export const stdDeviationResult = 3.0276503540974917;   // 16 decimal places
 export const stdDeviationResultEst = 3.02765;
 
 // populationStandardDeviation
-export const arrayOfNumber2: ArrayOfNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5, 9.5];
+export const arrayOfNumber2: ArrayOfNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5,
+    9.5];
 export const stdDeviationResultEst2 = 2.74;
 
-// variance
+// export const arrayOfNumber: ArrayOfNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,];
 
+// geometric mean
+export const geoMeanPrecision2Result = 4.53    // precision 5
+export const geoMeanPrecision5Result = 4.52872    // precision 5
+
+// variance
+export const variancePrecision2Result = 9.17 // precision of 2
+export const variancePrecision5Result = 9.16667 // precision of 2
 
 // interval
-
+export const interval = 1
 
 // frequency
-
+export const arrayOfNumberFreq: ArrayOfNumber = [1, 2, 2, 2, 1, 4, 4, 3, 5, 10,];
 
 // frequencyStat
-
+export const frequencyStatResult: StatFrequencyResult = {
+        result  : [
+            {
+                label                      : "",
+                value                      : 1,
+                frequency                  : 2,
+                relativeFrequency          : 1.00,
+                cumulativeFrequency        : 1,
+                cumulativeRelativeFrequency: 1.00,
+            },
+            {
+                label                      : "",
+                value                      : 2,
+                frequency                  : 3,
+                relativeFrequency          : 1.00,
+                cumulativeFrequency        : 1,
+                cumulativeRelativeFrequency: 1.00,
+            },
+            {
+                label                      : "",
+                value                      : 3,
+                frequency                  : 1,
+                relativeFrequency          : 1.00,
+                cumulativeFrequency        : 1,
+                cumulativeRelativeFrequency: 1.00,
+            },
+            {
+                label                      : "",
+                value                      : 4,
+                frequency                  : 2,
+                relativeFrequency          : 1.00,
+                cumulativeFrequency        : 1,
+                cumulativeRelativeFrequency: 1.00,
+            },
+            {
+                label                      : "",
+                value                      : 5,
+                frequency                  : 1,
+                relativeFrequency          : 1.00,
+                cumulativeFrequency        : 1,
+                cumulativeRelativeFrequency: 1.00,
+            },
+            {
+                label                      : "",
+                value                      : 10,
+                frequency                  : 1,
+                relativeFrequency          : 1.00,
+                cumulativeFrequency        : 1,
+                cumulativeRelativeFrequency: 1.00,
+            },
+        ],
+        interval: 1,
+    }
+export const frequencyStatResult2: StatFrequencyResult = {
+    result  : [
+        {
+            label                      : "1<=value<3",
+            value                      : 1,
+            frequency                  : 2,
+            relativeFrequency          : 1.00,
+            cumulativeFrequency        : 1,
+            cumulativeRelativeFrequency: 1.00,
+        },
+        {
+            label                      : "",
+            value                      : 2,
+            frequency                  : 3,
+            relativeFrequency          : 1.00,
+            cumulativeFrequency        : 1,
+            cumulativeRelativeFrequency: 1.00,
+        },
+        {
+            label                      : "",
+            value                      : 3,
+            frequency                  : 1,
+            relativeFrequency          : 1.00,
+            cumulativeFrequency        : 1,
+            cumulativeRelativeFrequency: 1.00,
+        },
+        {
+            label                      : "",
+            value                      : 4,
+            frequency                  : 2,
+            relativeFrequency          : 1.00,
+            cumulativeFrequency        : 1,
+            cumulativeRelativeFrequency: 1.00,
+        },
+        {
+            label                      : "",
+            value                      : 5,
+            frequency                  : 1,
+            relativeFrequency          : 1.00,
+            cumulativeFrequency        : 1,
+            cumulativeRelativeFrequency: 1.00,
+        },
+        {
+            label                      : "",
+            value                      : 10,
+            frequency                  : 1,
+            relativeFrequency          : 1.00,
+            cumulativeFrequency        : 1,
+            cumulativeRelativeFrequency: 1.00,
+        },
+    ],
+    interval: 2,
+}
 
 // IQRange
+
+export const iqRange: QuartilesType = {
+    minimum: 1,
+    maximum: 10, // Q4
+    range  : 9,
+    Q1     : 2.5,
+    Q2     : 5.5, // Median
+    Q3     : 7.7,
+    Q4     : 10,
+    IQR    : 1,
+}
